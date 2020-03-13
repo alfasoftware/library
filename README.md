@@ -18,3 +18,10 @@ As library user, when I am interested in a book, I want to see the title and aut
 As a library user, when I really like a book, I want to take it out on loan.
 
 As a library user, when I take out a book, I want to know when book is due back in the library, so I can return it on time (concept: fix it to a week initially)
+
+## Using the app
+
+* Clone this repo
+* Navigate to library-app folder
+* Run ```npm start``` in Command Prompt/Terminal
+* To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal 
