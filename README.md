@@ -2,6 +2,8 @@
 This app will enable borrowers to log the books they take out on loan. Initial loan period will be one week.
 It is a work-in-progress that was started during an Innovation Day hosted by Alfa Systems by a team of 7.
 
+Technologies used include React.
+
 ## Key Stories
 
 As an library user, I want to see a list of books that are in the library, before I go to the library. - GET request
