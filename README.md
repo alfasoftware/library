@@ -2,7 +2,7 @@
 This app will enable borrowers to log the books they take out on loan. Initial loan period will be one week.
 It is a work-in-progress that was started during an Innovation Day hosted by Alfa Systems by a team of 7.
 
-Technologies used include React.
+Technologies used include React and Spring Boot.
 
 ## Key Stories
 
@@ -24,4 +24,8 @@ As a library user, when I take out a book, I want to know when book is due back 
 * Clone this repo
 * Navigate to library-app folder
 * Run ```npm start``` in Command Prompt/Terminal
-* To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal 
+* To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal
+
+## Progress so far
+
+Currently console logging request from API.

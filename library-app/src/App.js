@@ -1,16 +1,25 @@
 import React from 'react';
-import './App.css';
-import Header from './Components/Header';
+import '../App.css';
 
-function App() {
-  return (
-    <div>
-      <Header/>
+export default class Header extends React.Component {
 
-    </div>
+    render() {
 
+        return(
+            <div>
+                <h1>Library</h1>
+            </div>
+        );
+    }
+} 
 
-  );
-}
+const URL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:9781406375695';
 
-export default App;
+fetch(URL)
+.then((response) => {
+  return response.json();
+})
+.then((data) => {
+  console.log(data.items[0].volumeInfo.title);
+  console.log(data.items[0].volumeInfo.authors);
+});
