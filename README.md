@@ -1,8 +1,21 @@
+       .--.                   .---.
+   .---|__|           .-.     |~~~|
+.--|===|--|_          |_|     |~~~|--.
+|  |===|  |'\     .---!~|  .--|   |--|
+|%%|   |  |.'\    |===| |--|%%|   |  |
+|%%|   |  |\.'\   |   | |__|  |   |  |
+|  |   |  | \  \  |===| |==|  |   |  |
+|  |   |__|  \.'\ |   |_|__|  |~~~|__|
+|  |===|--|   \.'\|===|~|--|%%|~~~|--|
+^--^---'--^    `-'`---^-^--^--^---'--' 
+
+Lo❤e the Library!
+
 # Library App
 This app will enable borrowers to log the books they take out on loan. Initial loan period will be one week.
 It is a work-in-progress that was started during an Innovation Day hosted by Alfa Systems by a team of 7.
 
-Technologies used include React and Spring Boot.
+Technologies used include React, Spring Boot and the Google Books API.
 
 ## Key Stories
 
