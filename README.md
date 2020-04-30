@@ -10,13 +10,12 @@ Technologies used include React, Spring Boot and the Google Books API.
 .--|===|--|_          |_|     |~~~|--.
 |  |===|  |'\     .---!~|  .--|   |--|
 |%%|   |  |.'\    |===| |--|%%|   |  |
-|%%|   |  |\.'\   |   | |__|  |   |  |
+|%%|   |  |\.'\   |   | |__|  |   |  |      Lo❤e the Library!
 |  |   |  | \  \  |===| |==|  |   |  |
 |  |   |__|  \.'\ |   |_|__|  |~~~|__|
 |  |===|--|   \.'\|===|~|--|%%|~~~|--|
 ^--^---'--^    `-'`---^-^--^--^---'--'
 ```
-Lo❤e the Library!
 
 ## Key Stories
 
@@ -25,7 +24,6 @@ As an library user, I want to see a list of books that are in the library, befor
 As a library manager, when I have a new book, I want to add it to the library.  - POST request
 
 As library user, when I am interested in a book, I want to see the title and author of that book
-
 
 ## Borrowing Actions
 
