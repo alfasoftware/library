@@ -7,7 +7,8 @@ export default class Book extends React.Component {
 
         title: null,
         author: null,
-        category: null
+        category: null,
+        image: null
 
     }
 
@@ -20,6 +21,7 @@ export default class Book extends React.Component {
         this.setState({title: data.items[0].volumeInfo.title});
         this.setState({author: data.items[0].volumeInfo.authors[0]});
         this.setState({category: data.items[0].volumeInfo.categories[0]});
+        this.setState({image: data.items[0].volumeInfo.imageLinks.smallThumbnail});
         
     }
 
@@ -29,6 +31,7 @@ export default class Book extends React.Component {
             <p>TITLE: {this.state.title}</p>
             <p>AUTHOR: {this.state.author}</p>
             <p>CATEGORY: {this.state.category}</p>
+            <img src={this.state.image}></img>
         </div>
         ) 
     }
