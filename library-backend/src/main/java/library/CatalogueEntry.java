@@ -1,4 +1,4 @@
-package library.catalogue;
+package library;
 
 public class CatalogueEntry {
 
