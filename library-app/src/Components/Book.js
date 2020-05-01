@@ -4,7 +4,9 @@ export default class Book extends React.Component {
 
     state = {
 
-        title: null
+        title: null,
+        author: null,
+        category: null
 
     }
 
@@ -15,12 +17,18 @@ export default class Book extends React.Component {
         const data = await response.json();
 
         this.setState({title: data.items[0].volumeInfo.title});
+        this.setState({author: data.items[0].volumeInfo.authors[0]});
+        this.setState({category: data.items[0].volumeInfo.categories[0]});
         
     }
 
     render() {
         return(
-        <div>TITLE: {this.state.title}</div>
+        <div>
+            <p>TITLE: {this.state.title}</p>
+            <p>AUTHOR: {this.state.author}</p>
+            <p>CATEGORY: {this.state.category}</p>
+        </div>
         ) 
     }
 }
