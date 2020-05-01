@@ -35,6 +35,7 @@ As a library user, when I take out a book, I want to know when book is due back 
 
 * Clone this repo
 * Navigate to library-app folder
+* run ```npm install``` in Command Prompt/Terminal to get node modules
 * Run ```npm start``` in Command Prompt/Terminal
 * To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal
 
