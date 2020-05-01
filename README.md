@@ -35,10 +35,12 @@ As a library user, when I take out a book, I want to know when book is due back 
 
 * Clone this repo
 * Navigate to library-app folder
-* run ```npm install``` in Command Prompt/Terminal to get node modules
+* Run ```npm install``` in Command Prompt/Terminal to get node modules
 * Run ```npm start``` in Command Prompt/Terminal
 * To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal
 
 ## Progress so far
 
-Currently console logging request from API.
+The React app is currently presenting book information and thumbnail image for a single book which is fetched via the Google Books API.
+
+Tha Spring Boot backend is utilising a database to implement a catalogue of books based on ISBN as the key. It allows for books to be taken out on loan by a user and for multiple copies of a book.
