@@ -43,4 +43,4 @@ As a library user, when I take out a book, I want to know when book is due back 
 
 The React app is currently presenting book information and thumbnail image for a single book which is fetched via the Google Books API.
 
-Tha Spring Boot backend is utilising a database to implement a catalogue of books based on ISBN as the key. It allows for books to be taken out on loan by a user and for multiple copies of a book.
+The Spring Boot backend is utilising a database to implement a catalogue of books based on ISBN as the key. It allows for books to be taken out on loan by a user and for multiple copies of a book.
