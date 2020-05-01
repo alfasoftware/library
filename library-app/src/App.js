@@ -15,14 +15,14 @@ export default class Header extends React.Component {
     }
 } 
 
-const URL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699';
+// const URL = 'https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699';
 
-fetch(URL)
-.then((response) => {
-  return response.json();
-})
-.then((data) => {
-  console.log(data.items[0].volumeInfo.title);
-  console.log(data.items[0].volumeInfo.authors)
-  console.log(data.items[0].volumeInfo.categories);
-});
+// fetch(URL)
+// .then((response) => {
+//   return response.json();
+// })
+// .then((data) => {
+//   // console.log(data.items[0].volumeInfo.title);
+//   // console.log(data.items[0].volumeInfo.authors)
+//   // console.log(data.items[0].volumeInfo.categories);
+// });
