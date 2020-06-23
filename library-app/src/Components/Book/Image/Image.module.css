@@ -1,0 +1,39 @@
+.div {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100%;
+  border-style: solid;
+  width: 50%;
+  align-items: center;
+  margin-left: 20%;
+  margin-top: 5%;
+  box-shadow: burlywood;
+  background-color: burlywood;
+  margin-bottom: 0%;
+}
+
+.Image {
+  background-color: white;
+  padding: 8px;
+  height: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  position: relative;
+  top: 5px;
+  max-width: fit-content;
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-left: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.Image img {
+  height: 100%;
+}

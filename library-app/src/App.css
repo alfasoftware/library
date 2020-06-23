@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   background-color: #282c34;
-
 }
 
 .App-logo {
@@ -14,7 +13,9 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+* {
+  background-color: whitesmoke;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -24,6 +25,8 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 10px;
+  height: 100px;
 }
 
 .Book {
@@ -38,12 +41,17 @@
 }
 
 h1 {
+  vertical-align: 0%;
   background-color: #282c34;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
+  padding: 15px;
+  margin-top: 0%;
+
+  text-shadow: blue;
 }
 
 .App-link {

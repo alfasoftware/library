@@ -1,0 +1,17 @@
+.Loading {
+  text-align: center;
+  color: royalblue;
+  font-style: italic;
+  transition: 0.3 ease-in-out;
+  -webkit-animation: pulsate 3s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  opacity: 0.5;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+}
+
+.pulsate-css {
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
