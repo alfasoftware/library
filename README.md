@@ -1,4 +1,5 @@
 # Library App
+
 This app will enable borrowers to log the books they take out on loan. Initial loan period will be one week.
 It is a work-in-progress that was started during an Innovation Day hosted by Alfa Systems by a team of 7.
 
@@ -21,7 +22,7 @@ Technologies used include React, Spring Boot and the Google Books API.
 
 As an library user, I want to see a list of books that are in the library, before I go to the library. - GET request
 
-As a library manager, when I have a new book, I want to add it to the library.  - POST request
+As a library manager, when I have a new book, I want to add it to the library. - POST request
 
 As library user, when I am interested in a book, I want to see the title and author of that book
 
@@ -33,11 +34,12 @@ As a library user, when I take out a book, I want to know when book is due back 
 
 ## Using the app
 
-* Clone this repo
-* Navigate to library-app folder
-* Run ```npm install``` in Command Prompt/Terminal to get node modules
-* Run ```npm start``` in Command Prompt/Terminal
-* To stop app use ```ctrl+c``` for Command Prompt or ```cmd+c``` in Terminal
+- Clone this repo
+- Navigate to library-app folder
+- Run `npm install --save axios` in Command Prompt/Terminal to get node modules and includes axios in the package
+- Run `npm install --save react-router-dom` in Command Prompt/Terminal to include react-router-dom in the package
+- Run `npm start`
+- To stop app use `ctrl+c` for Command Prompt or `cmd+c` in Terminal
 
 ## Progress so far
 
