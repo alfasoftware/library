@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ class Controller {
     this.loanRepository = loanRepository;
   }
 
+  @CrossOrigin
   @GetMapping(path = "/api/catalogue")
   public List<CatalogueEntry> getCatalogue() {
 
@@ -35,12 +37,14 @@ class Controller {
       .collect(Collectors.toList());
   }
 
+  @CrossOrigin
   @PostMapping(path = "/api/addBook")
   public String addNewBook(@RequestBody long isbn) {
     bookRepository.save(new Book(isbn));
     return "SAVED";
   }
 
+  @CrossOrigin
   @PostMapping(path = "/api/checkOutBook")
   public Loan checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
     final List<Book> availableBooks = bookRepository.findBookByIsbnAndCheckedOutFalse(request.getIsbn());
@@ -61,6 +65,7 @@ class Controller {
     return loan;
   }
 
+  @CrossOrigin
   @PostMapping(path = "/api/returnBook")
   public Loan returnBook(@RequestBody CheckoutOrReturnRequest request) {
     List<Loan> activeLoans = loanRepository.findActiveLoansBy(request.getIsbn(), request.getUserId());
