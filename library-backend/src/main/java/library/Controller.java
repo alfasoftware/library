@@ -43,7 +43,7 @@ class Controller {
 
   @PostMapping(path = "/api/checkOutBook")
   public Loan checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
-    final List<Book> availableBooks = bookRepository.findBookByIsbnAndCheckedOutIsFalse(request.getIsbn());
+    final List<Book> availableBooks = bookRepository.findBookByIsbnAndCheckedOutFalse(request.getIsbn());
     if(availableBooks.isEmpty()) throw new RuntimeException("No available copies of " + request.getIsbn());
 
     final Book firstAvailableBook = availableBooks.get(0);
