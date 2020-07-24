@@ -1,0 +1,57 @@
+.TableEntryTitle {
+  display: inline-block;
+  font-size: x-large;
+  font-weight: bold;
+  background-color: whitesmoke;
+  color: black;
+  margin: auto;
+  top: 80px;
+  position: relative;
+  border: 1px solid black;
+  text-align: center;
+  padding: 15px;
+  width: 20%;
+  height: 20%;
+}
+
+.TableEntryDescription {
+  display: inline-block;
+  font-size: x-large;
+  font-weight: bold;
+  background-color: whitesmoke;
+  color: black;
+  margin: auto;
+  top: 80px;
+  position: relative;
+  border: 1px solid black;
+  text-align: center;
+  padding: 15px;
+  width: 20%;
+  height: 20%;
+}
+
+.Table {
+  margin: auto;
+  margin-left: 5%;
+}
+
+.TableEntryButton {
+  display: inline-block;
+  font-size: x-large;
+  font-weight: bold;
+  background-color: whitesmoke;
+  color: black;
+  margin: auto;
+  top: 80px;
+  position: relative;
+  border: 1px solid black;
+  text-align: center;
+  padding: 15px;
+  width: 20%;
+  height: 20%;
+  background-color: cadetblue;
+}
+
+.TableEntryButton:hover {
+  background-color: rgb(90, 192, 196);
+}
