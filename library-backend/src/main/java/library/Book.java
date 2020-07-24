@@ -12,25 +12,25 @@ class Book {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
+  private Long id;
 
   private long isbn;
 
   private boolean checkedOut;
 
-  Book(final long isbn) {
+  Book(final Long isbn) {
     this.isbn = isbn;
   }
 
-  int getId() {
+  public Long getId() {
     return id;
   }
 
-  long getIsbn() {
+  public long getIsbn() {
     return isbn;
   }
 
-  boolean isCheckedOut() {
+  public  boolean isCheckedOut() {
     return checkedOut;
   }
 

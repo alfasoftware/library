@@ -51,7 +51,7 @@ class Controller {
     bookRepository.save(firstAvailableBook);
 
     Loan loan = new Loan();
-    loan.setBookOnLoan(firstAvailableBook.getId());
+    loan.setBookOnLoan(firstAvailableBook);
     loan.setCheckoutDate(LocalDate.now());
     loan.setDueDate(LocalDate.now().plusWeeks(3));
     loan.setUser(request.getUserId());
@@ -67,7 +67,7 @@ class Controller {
     if(activeLoans.isEmpty()) throw new RuntimeException("No active loans for user " + request.getUserId() + " and isbn " + request.getIsbn());
 
     Loan earliestDueLoan = activeLoans.get(0);
-    Book book = bookRepository.findById(earliestDueLoan.getBookOnLoan()).orElseThrow(() -> new RuntimeException("No book of ID " + earliestDueLoan.getBookOnLoan()));
+    Book book = bookRepository.findById(earliestDueLoan.getBookOnLoan().getId()).orElseThrow(() -> new RuntimeException("No book of ID " + earliestDueLoan.getBookOnLoan()));
 
     earliestDueLoan.setReturned(true);
     book.setCheckedOut(false);

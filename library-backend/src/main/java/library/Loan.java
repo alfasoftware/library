@@ -3,9 +3,12 @@ package library;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 class Loan {
@@ -14,7 +17,9 @@ class Loan {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
-  private Integer bookOnLoan;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "bookId", referencedColumnName = "id")
+  private Book bookOnLoan;
 
   private String user;
 
@@ -32,11 +37,11 @@ class Loan {
     this.id = id;
   }
 
-  public Integer getBookOnLoan() {
+  public Book getBookOnLoan() {
     return bookOnLoan;
   }
 
-  void setBookOnLoan(Integer bookOnLoan) {
+  void setBookOnLoan(Book bookOnLoan) {
     this.bookOnLoan = bookOnLoan;
   }
 
