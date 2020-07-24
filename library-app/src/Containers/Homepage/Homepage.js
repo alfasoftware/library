@@ -59,9 +59,9 @@ class Homepage extends Component {
     //adds it to the state of the google API prefix
   };
 
-  SearchBarDisplay = () => {
-    return <SearchBar />;
-  };
+  // SearchBarDisplay = () => {
+  //   return <SearchBar />;
+  // };
 
   getSearchText = () => {
     const searchText = this.state.searchText;

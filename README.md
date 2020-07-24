@@ -41,7 +41,6 @@ As a library user, when I take out a book, I want to know when book is due back 
 - Run `npm start`
 - To stop app use `ctrl+c` for Command Prompt or `cmd+c` in Terminal
 
-
 ## Progress so far
 
 The React app is currently presenting book information and thumbnail image for a single book which is fetched via the Google Books API.
