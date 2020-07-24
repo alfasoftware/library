@@ -13,6 +13,7 @@ export default class Book extends React.Component {
     author: null,
     category: null,
     image: null,
+    ISBN: null,
   };
 
   constructor() {
@@ -20,21 +21,24 @@ export default class Book extends React.Component {
   }
 
   async componentDidMount() {
-    axios
-      .get(
-        "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
-          this.props.fullISBN
-      )
-      .then((response) => {
-        this.setState({
-          title: response.data.items[0].volumeInfo.title,
-          author: response.data.items[0].volumeInfo.authors[0],
-          category: response.data.items[0].volumeInfo.categories[0],
-          image: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
-        });
-      })
-      .catch((error) => console.log(error));
-    console.log("BOOK - this.props.URL: " + this.props.searchText);
+    this.setState({ ISBN: this.props.fullISBN });
+    if (this.props.fullISBN !== this.state.fullISBN) {
+      axios
+        .get(
+          "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
+            this.props.fullISBN
+        )
+        .then((response) => {
+          this.setState({
+            title: response.data.items[0].volumeInfo.title,
+            author: response.data.items[0].volumeInfo.authors[0],
+            category: response.data.items[0].volumeInfo.categories[0],
+            image: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
+          });
+        })
+        .catch((error) => console.log(error));
+      console.log("BOOK - this.props.URL: " + this.props.searchText);
+    }
 
     // const fullUrl =
     //   "https://www.googleapis.com/books/v1/volumes?q=isbn:" + "0747532699";
@@ -55,31 +59,36 @@ export default class Book extends React.Component {
   }
 
   componentDidUpdate() {
-    axios
-      .get(
-        "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
-          this.props.fullISBN
-      )
-      .then((response) => {
-        if (response.data === "undefined") {
-          this.setState({
-            title: null,
-          });
-        }
+    if (this.props.fullISBN !== this.state.ISBN) {
+      this.setState({ ISBN: this.props.fullISBN });
 
-        console.log("This is the response " + response);
-        console.log("This is the response data " + response.data);
-        if (response.data !== "undefined") {
-          this.setState({
-            title: response.data.items[0].volumeInfo.title,
-            author: response.data.items[0].volumeInfo.authors[0],
-            category: response.data.items[0].volumeInfo.categories[0],
-            image: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
-          });
-        }
-      })
-      .catch((error) => console.log(error));
-    console.log("BOOK - this.props.URL: " + this.props.searchText);
+      axios
+        .get(
+          "https://www.googleapis.com/books/v1/volumes?q=isbn:" +
+            this.props.fullISBN
+        )
+        .then((response) => {
+          if (response.data === "undefined") {
+            this.setState({
+              title: null,
+            });
+          }
+
+          console.log("This is the response " + response);
+          console.log("This is the response data " + response.data);
+          if (response.data !== "undefined") {
+            this.setState({
+              title: response.data.items[0].volumeInfo.title,
+              author: response.data.items[0].volumeInfo.authors[0],
+              category: response.data.items[0].volumeInfo.categories[0],
+              image:
+                response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
+            });
+          }
+        })
+        .catch((error) => console.log(error));
+      console.log("BOOK - this.props.URL: " + this.props.searchText);
+    }
   }
 
   // componentWillReceiveProps(nextProps) {
