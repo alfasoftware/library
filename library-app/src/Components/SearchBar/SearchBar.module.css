@@ -1,0 +1,38 @@
+.SearchBar {
+  align-items: center;
+  margin: 10px 0;
+  box-sizing: border-box;
+  font-size: large;
+  z-index: 500;
+  background-color: white;
+  width: 30%;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px black;
+  padding: 16px;
+  display: inline;
+  margin-right: auto;
+  margin-left: 33%;
+  background-color: bisque;
+  align-items: center;
+}
+.SearchBar:hover {
+  background-color: rgb(235, 198, 152);
+}
+
+.Button {
+  background-color: black;
+  display: inline;
+  border: none;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  font: inherit;
+  padding: 15px;
+  margin: 10px;
+  font-weight: bold;
+  align-items: center;
+}
+
+.Button:hover {
+  background-color: #282c34;
+}
