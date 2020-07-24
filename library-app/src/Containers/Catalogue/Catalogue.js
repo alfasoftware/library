@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Header from "../../Components/Header";
 import SearchBar from "../../Components/SearchBar/SearchBar";
+import CatalogueItem from "../../Components/Catalogue/CatalogueItem";
 
 class Catalogue extends Component {
   
@@ -11,6 +12,18 @@ class Catalogue extends Component {
   }
 
   render() {
+    let tableEntries = null;
+
+    tableEntries = this.state.books.map( (book) => { 
+      return (
+        <CatalogueItem 
+          image={book.image}
+          title={book.title} 
+          description={book.description} 
+          author={book.author} />
+      )
+    })
+
     return (
       <div>
         <Header />
@@ -22,7 +35,7 @@ class Catalogue extends Component {
           >
             {this.props.children}
           </SearchBar>
-          <p>Hello, this is the catalogue</p>
+          {tableEntries}
       </div>
     );
   };
