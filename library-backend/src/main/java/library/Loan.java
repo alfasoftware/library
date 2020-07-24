@@ -24,48 +24,51 @@ class Loan {
 
   private boolean returned;
 
-
-  Integer getId() {
+  public Integer getId() {
     return id;
   }
 
-  Integer getBookOnLoan() {
+  void setId(Integer id) {
+    this.id = id;
+  }
+
+  public Integer getBookOnLoan() {
     return bookOnLoan;
   }
 
-  void setBookOnLoan(final Integer bookOnLoan) {
+  void setBookOnLoan(Integer bookOnLoan) {
     this.bookOnLoan = bookOnLoan;
   }
 
-  String getUser() {
+  public String getUser() {
     return user;
   }
 
-  void setUser(final String user) {
+  void setUser(String user) {
     this.user = user;
   }
 
-  LocalDate getCheckoutDate() {
+  public LocalDate getCheckoutDate() {
     return checkoutDate;
   }
 
-  void setCheckoutDate(final LocalDate checkoutDate) {
+  void setCheckoutDate(LocalDate checkoutDate) {
     this.checkoutDate = checkoutDate;
   }
 
-  LocalDate getDueDate() {
+  public LocalDate getDueDate() {
     return dueDate;
   }
 
-  void setDueDate(final LocalDate dueDate) {
+  public void setDueDate(LocalDate dueDate) {
     this.dueDate = dueDate;
   }
 
-  boolean isReturned() {
+  public boolean isReturned() {
     return returned;
   }
 
-  void setReturned(final boolean returned) {
+  public void setReturned(boolean returned) {
     this.returned = returned;
   }
 }

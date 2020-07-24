@@ -12,5 +12,5 @@ public interface BookRepository extends CrudRepository<Book, Integer> {
   List<Book> findAll();
 
   @Query("from Book where isbn=:isbn and checkedOut=false")
-  List<Book> findAvailableBooksByIsbn(@Param("isbn") long isbn);
+  List<Book> findBookByIsbnAndCheckedOutIsFalse(long isbn);
 }
