@@ -16,21 +16,6 @@ class Book {
 
   private long isbn;
 
-  private String author;
-
-  private String title;
-
-  private String description;
-
-  private String imageUrl;
-
-  private boolean checkedOut; // TODO remove?
-
-  Book(final Long isbn) {
-    this.isbn = isbn;
-  }
-
-
   public Long getId() {
     return id;
   }
@@ -39,47 +24,7 @@ class Book {
     return isbn;
   }
 
-  public  boolean isCheckedOut() {
-    return checkedOut;
-  }
-
-  void setCheckedOut(boolean checkedOut) {
-    this.checkedOut = checkedOut;
-  }
-
   void setIsbn(final long isbn) {
     this.isbn = isbn;
-  }
-
-  String getAuthor() {
-    return author;
-  }
-
-  void setAuthor(final String author) {
-    this.author = author;
-  }
-
-  String getTitle() {
-    return title;
-  }
-
-  void setTitle(final String title) {
-    this.title = title;
-  }
-
-  String getDescription() {
-    return description;
-  }
-
-  void setDescription(final String description) {
-    this.description = description;
-  }
-
-  String getImageUrl() {
-    return imageUrl;
-  }
-
-  void setImageUrl(final String imageUrl) {
-    this.imageUrl = imageUrl;
   }
 }
