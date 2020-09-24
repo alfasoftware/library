@@ -7,6 +7,7 @@ import Modal from "../../UI/Modal/Modal";
 import CheckOutBook from "../../Components/CheckOutBookPanel/CheckOutBook";
 import { Route, Switch, withRouter } from "react-router-dom";
 
+//This class is deprecated and scheduled to be deleted, please refer to the HomepageScreen in the Pages folder
 class Homepage extends Component {
   state = {
     searchText: "0747532699",
