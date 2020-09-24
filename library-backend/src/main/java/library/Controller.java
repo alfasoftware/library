@@ -56,6 +56,14 @@ class Controller {
     return volumeCache.getFor(isbn);
   }
 
+
+  @CrossOrigin
+  @GetMapping(path = "/api/volumeDetails")
+  public Volume getVolumeDetails(@RequestBody long isbn) {
+    return volumeCache.getFor(isbn);
+  }
+
+
   @CrossOrigin
   @PostMapping(path = "/api/checkOutBook")
   public Loan checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
