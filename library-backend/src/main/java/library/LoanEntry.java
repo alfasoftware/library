@@ -1,8 +1,8 @@
 package library;
 
-import com.google.api.services.books.model.Volume;
-
 import java.time.LocalDate;
+
+import com.google.api.services.books.v1.model.Volume;
 
 public class LoanEntry {
 
