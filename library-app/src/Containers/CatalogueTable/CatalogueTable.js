@@ -1,37 +1,34 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import BookData from "./BookData.json";
 
 const CatalogueTable = () => {
+  const data  = BookData.map((bookEntry) => {
+    return ( <tbody>
+      <tr>
+        <td>{bookEntry.title}</td>
+        <td rowspan="2">{bookEntry.author}</td>
+        <td rowspan="2">2</td>
+        <td rowspan="2">01/01/21</td>
+      </tr>
+      <tr>
+        <td>Book 1 Image</td>
+      </tr></tbody>
+    )
+  })
+
   return (
     <div>
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>Full Catalogue</th>
+            <th>Author</th>
+            <th>Copy Available</th>
+            <th>Return Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td colSpan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
+          {data}
       </Table>
     </div>
   );
