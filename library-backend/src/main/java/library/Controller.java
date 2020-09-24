@@ -59,7 +59,7 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/volumeDetails")
-  public Volume getVolumeDetails(@RequestBody long isbn) {
+  public Volume getVolumeDetails(@RequestParam long isbn) {
     return volumeCache.getFor(isbn);
   }
 
