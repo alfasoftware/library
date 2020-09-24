@@ -1,20 +1,22 @@
 package library;
 
-public class CatalogueEntry { // TODO enhance that - more info
+import com.google.api.services.books.model.Volume;
 
-  private final long isbn;
-  private final int availableCopies;
+class CatalogueEntry {
 
-  public CatalogueEntry(final long isbn, final int availableCopies) {
-    this.isbn = isbn;
+  private final Volume volume;
+  private final long availableCopies;
+
+  CatalogueEntry(final Volume volume, final long availableCopies) {
+    this.volume = volume;
     this.availableCopies = availableCopies;
   }
 
-  public long getIsbn() {
-    return isbn;
+  public Volume getVolume() {
+    return volume;
   }
 
-  public int getAvailableCopies() {
+  public long getAvailableCopies() {
     return availableCopies;
   }
 }
