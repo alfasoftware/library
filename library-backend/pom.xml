@@ -65,6 +65,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-books</artifactId>
+			<version>v1-rev20200717-1.30.10</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -1,6 +1,6 @@
 package library;
 
-public class CatalogueEntry {
+public class CatalogueEntry { // TODO enhance that - more info
 
   private final long isbn;
   private final int availableCopies;

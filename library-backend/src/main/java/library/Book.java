@@ -16,7 +16,7 @@ class Book {
 
   private long isbn;
 
-  private boolean checkedOut;
+  private boolean checkedOut; // TODO remove?
 
   Book(final Long isbn) {
     this.isbn = isbn;
