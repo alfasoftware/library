@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.google.api.services.books.model.Volume;
 
@@ -20,42 +18,40 @@ class Controller {
 
   private final BookRepository bookRepository;
   private final LoanRepository loanRepository;
-  private final RestTemplate restTemplate;
+  private final VolumeCache volumeCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final RestTemplateBuilder restTemplateBuilder) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final VolumeCache volumeCache) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
-    this.restTemplate = restTemplateBuilder.build();
+    this.volumeCache = volumeCache;
   }
+
 
   @CrossOrigin
   @GetMapping(path = "/api/catalogue")
   public List<CatalogueEntry> getCatalogue() {
-
     return bookRepository.findAll()
       .stream()
-      .filter(book -> !book.isCheckedOut()) // TODO return all of them
       .collect(Collectors.groupingBy(Book::getIsbn, Collectors.counting()))
       .entrySet()
       .stream()
-      .map(entry -> new CatalogueEntry(entry.getKey(), entry.getValue().intValue()))
+      .map(entry -> new CatalogueEntry(volumeCache.getFor(entry.getKey()), entry.getValue().intValue()))
       .collect(Collectors.toList());
   }
 
+
+
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
-  public String addNewBook(@RequestBody long isbn) {
+  public Volume addNewBook(@RequestBody long isbn) {
+    // Save isbn to our database of books
+    final Book bookToSave = new Book();
+    bookToSave.setIsbn(isbn);
+    bookRepository.save(bookToSave);
 
-    final Volume test = restTemplate.getForObject("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn, Volume.class);
-    System.out.println(test);
-
-    // Mapper (volume to book domain)
-    // domain changes - add our new columns
-
-    // populate book
-    bookRepository.save(new Book(isbn));
-    return "SAVED"; // return book
+    // Cache detailed volume information and return.
+    return volumeCache.getFor(isbn);
   }
 
   @CrossOrigin
@@ -79,7 +75,6 @@ class Controller {
     return loan;
   }
 
-  // TODO new endpoint - all books for user
 
   @CrossOrigin
   @PostMapping(path = "/api/returnBook")
@@ -98,5 +93,4 @@ class Controller {
 
     return earliestDueLoan;
   }
-
 }
