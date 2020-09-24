@@ -14,7 +14,7 @@ import Background from "../../assets/librarySecondHeader.jpg";
 
 const ScreenHeaderImage = (props) => {
   var styles = {
-    backgroundImage: `url(${Background})`,
+    backgroundImage: `url(${props.background})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     top: "-80px",
@@ -22,6 +22,7 @@ const ScreenHeaderImage = (props) => {
     height: "400px",
     border: "1px solid gray",
     borderRadius: "0px",
+    textAlign: "center",
   };
 
   var titleStyle = {
@@ -34,16 +35,18 @@ const ScreenHeaderImage = (props) => {
         <h1
           style={{
             background: "transparent",
-            color: "whitesmoke",
+            color: props.textColor,
             fontSize: "50px",
-            margin: "auto",
+
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
             marginTop: "20px",
-            display: "flex",
+            display: "inline-block",
+            margin: "auto",
             flexDirection: "column",
             fontSize: "75px",
+
             // WebkitTextStrokeWidth: "1px",
             // WebkitTextStrokeColor: "gray",
           }}

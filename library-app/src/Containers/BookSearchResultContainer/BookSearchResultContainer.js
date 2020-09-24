@@ -20,16 +20,18 @@ const BookSearchResultContainer = (props) => {
       .then((response) => {
         console.log("my response= " + response);
 
+        const responsePretext = response.data.items[0].volumeInfo;
+
         let obj = {
-          title: response.data.items[0].volumeInfo.title,
-          author: response.data.items[0].volumeInfo.authors[0],
-          imageUrl: response.data.items[0].volumeInfo.imageLinks.thumbnail,
-          isbn:
-            response.data.items[0].volumeInfo.industryIdentifiers[0].identifier,
-          // response.data.items[0].volumeInfo.subtitle
-          // response.data.items[0].volumeInfo.publisher
-          // response.data.items[0].volumeInfo.publishedDate
-          // response.data.items[0].volumeInfo.description
+          title: responsePretext.title,
+          author: responsePretext.authors[0],
+          imageUrl: responsePretext.imageLinks.thumbnail,
+          isbn: responsePretext.industryIdentifiers[0].identifier,
+          subtitle: responsePretext.subtitle,
+          publisher: responsePretext.publisher,
+          publishedDate: responsePretext.publishedDate,
+          description: responsePretext.description,
+          //   category: responsePretext.volumeInfo.categories[0],
         };
         setBookInfo(obj);
       })
@@ -45,8 +47,12 @@ const BookSearchResultContainer = (props) => {
       {bookInfo ? (
         <Book
           title={bookInfo.title}
+          subtitle={bookInfo.subtitle}
           image={bookInfo.imageUrl}
           author={bookInfo.author}
+          description={bookInfo.description}
+          publisher={bookInfo.publisher}
+          publishedDate={bookInfo.publishedDate}
           checkOutBook={checkoutBookHandler}
         />
       ) : (

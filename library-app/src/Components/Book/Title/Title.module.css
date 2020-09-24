@@ -1,5 +1,5 @@
 .div {
-  margin: 0;
+  /* margin: 0;
   padding: 0;
   list-style: none;
   display: flex;
@@ -14,19 +14,18 @@
   border-bottom: transparent;
   box-shadow: burlywood;
   background-color: burlywood;
-  border-top: transparent;
+  border-top: transparent; */
 }
 
 .bookInfo {
-  background-color: burlywood;
+  /* background-color: burlywood;
   color: black;
   font-family: sans-serif;
-  font-size: x-large;
+  font-size: x-large; */
 }
 
 .title {
-  background-color: burlywood;
   color: black;
+  font-size: 40px;
   font-family: sans-serif;
-  font-size: medium;
 }

@@ -9,7 +9,7 @@
   {
     "id": 2,
     "direction": "row-reverse",
-    "title": "Request books",
+    "title": "Request resources",
     "subTitle": "Put in a request for a new book to help expand our collection",
     "image": "assets/requestBook.jpg"
   },
