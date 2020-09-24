@@ -1,8 +1,11 @@
 package library;
 
 
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -10,7 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.google.api.services.books.model.Volume;
+import com.google.api.services.books.v1.model.Volume;
 import com.google.common.collect.Maps;
 
 /**
@@ -42,9 +45,22 @@ class VolumeCache {
       .orElseGet(() -> getVolumeAndAddToCache(isbn));
   }
 
+  List<Volume> searchByTitleOrAuthor(String searchString) {
+    return isbnToVolumeCache.entrySet().stream()
+      .filter(e -> matchesBookInfo(searchString, e.getValue()))
+      .map(Entry::getValue)
+      .collect(Collectors.toList());
+  }
+
+
   private Volume getVolumeAndAddToCache(final long isbn) {
     final Volume volumeToCache = restTemplate.getForObject("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn, Volume.class);
     isbnToVolumeCache.put(isbn, volumeToCache);
     return volumeToCache;
   }
+
+  private boolean matchesBookInfo(final String searchString, final Volume v) {
+     return true; // TODO
+  }
+
 }

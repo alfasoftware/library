@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.api.services.books.model.Volume;
+import com.google.api.services.books.v1.model.Volume;
 
 @RestController
 class Controller {
@@ -82,5 +82,12 @@ class Controller {
     loanRepository.save(earliestDueLoan);
 
     return earliestDueLoan;
+  }
+
+
+  @CrossOrigin
+  @GetMapping(path = "/api/search")
+  public List<Volume> search(@RequestBody String searchString) {
+    return volumeCache.searchByTitleOrAuthor(searchString);
   }
 }

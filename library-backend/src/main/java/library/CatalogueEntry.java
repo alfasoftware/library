@@ -1,6 +1,6 @@
 package library;
 
-import com.google.api.services.books.model.Volume;
+import com.google.api.services.books.v1.model.Volume;
 
 class CatalogueEntry {
 
