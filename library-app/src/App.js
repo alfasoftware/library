@@ -6,6 +6,7 @@ import SearchResultsScreen from "./Pages/SearchResultsScreen";
 import TestScreen from "./Pages/TestScreen";
 import MyLibraryScreen from "./Pages/MyLibraryScreen";
 import BookInfoScreen from "./Pages/BookInfoScreen";
+import BookRequestScreen from "./Pages/BookRequestScreen";
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/catalogue" component={CatalogueScreen} />
           <Route path="/myLibrary" component={MyLibraryScreen} />
           <Route path="/books" component={BookInfoScreen} />
+          <Route path="/requestBook" component={BookRequestScreen} />
           <Route path="/test" component={TestScreen} />
           <Route path="/" exact component={HomepageScreen} />
         </Switch>
