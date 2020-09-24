@@ -10,7 +10,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
-import Background from "../../assets/libraryWhite.jpg";
+import Background from "../../assets/librarySecondHeader.jpg";
 
 const ScreenHeaderImage = (props) => {
   var styles = {
@@ -34,14 +34,18 @@ const ScreenHeaderImage = (props) => {
         <h1
           style={{
             background: "transparent",
-            color: "white",
+            color: "whitesmoke",
             fontSize: "50px",
             margin: "auto",
             justifyContent: "center",
             alignItems: "center",
             alignContent: "center",
+            marginTop: "20px",
             display: "flex",
             flexDirection: "column",
+            fontSize: "75px",
+            // WebkitTextStrokeWidth: "1px",
+            // WebkitTextStrokeColor: "gray",
           }}
         >
           {props.title}
