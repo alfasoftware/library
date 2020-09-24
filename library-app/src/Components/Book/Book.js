@@ -39,23 +39,6 @@ export default class Book extends React.Component {
         .catch((error) => console.log(error));
       console.log("BOOK - this.props.URL: " + this.props.searchText);
     }
-
-    // const fullUrl =
-    //   "https://www.googleapis.com/books/v1/volumes?q=isbn:" + "0747532699";
-
-    // //this is where we concatinate the URl
-    // // this.props.searchText returns undefined, find a way to make it return
-    // //the actual state
-
-    // const response = await fetch(fullUrl);
-    // const data = await response.json();
-
-    // this.setState({ title: data.items[0].volumeInfo.title });
-    // this.setState({ author: data.items[0].volumeInfo.authors[0] });
-    // this.setState({ category: data.items[0].volumeInfo.categories[0] });
-    // this.setState({
-    //   image: data.items[0].volumeInfo.imageLinks.smallThumbnail,
-    // });
   }
 
   componentDidUpdate() {
@@ -91,18 +74,6 @@ export default class Book extends React.Component {
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.fullURL !== this.props.fullURL) {
-  //     this.setState({ URL: nextProps.fullURL });
-  //   }
-  // }
-
-  //   componentDidUpdate = (prevProps) => {
-  //     if (this.props.fullURL !== prevProps.fullURL) {
-  //       this.fetchData(this.props.fullURL);
-  //     }
-  //   };
-
   render() {
     let renderedBook = (
       <div className={classes.UnSearched}>
@@ -120,7 +91,6 @@ export default class Book extends React.Component {
 
           <button
             className={classes.OrderButton}
-            // disabled={!this.props.purchasable}
             onClick={this.props.checkOutBook}
           >
             Check out book

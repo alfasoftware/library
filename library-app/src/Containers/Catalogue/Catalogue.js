@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../../Components/Header";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import CatalogueItem from "../../Components/Catalogue/CatalogueItem";
+import axios from "axios";
 
 class Catalogue extends Component {
   state = {
@@ -28,7 +29,18 @@ class Catalogue extends Component {
         ISBN: "FakeIsbn",
       },
     ],
+
+    GetCatalogue: [],
   };
+
+  componentDidMount() {
+    axios
+      .get("http://localhost:8081/api/catalogue")
+      .then((response) => {
+        this.setState({ GetCatalogue: response.data });
+      })
+      .catch((error) => console.log(error));
+  }
 
   openBookDetailsHandler = (book) => {
     console.log(this.props);
@@ -39,6 +51,14 @@ class Catalogue extends Component {
   };
 
   render() {
+    console.log(this.state.GetCatalogue);
+
+    if (this.state.GetCatalogue[0]) {
+      console.log(this.state.GetCatalogue[0].isbn);
+    }
+
+    let isbns = null;
+
     let tableEntries = null;
 
     tableEntries = this.state.books.map((book) => {
@@ -59,14 +79,7 @@ class Catalogue extends Component {
     return (
       <div>
         <Header />
-        <SearchBar
-        // value={this.state.searchText}
-        // searchWords={this.state.URL}
-        // onTextInput={this.handleChangeSearchText}
-        // onSearch={this.handleDoSearch}
-        >
-          {this.props.children}
-        </SearchBar>
+
         {tableEntries}
       </div>
     );
