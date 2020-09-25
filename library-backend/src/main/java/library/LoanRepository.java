@@ -12,4 +12,6 @@ public interface LoanRepository extends CrudRepository<Loan, Integer> {
   List<Loan> findActiveLoansBy(@Param("isbn")long isbn, @Param("userId")String userId);
 
   List<Loan> findByUser(String user);
+
+  List<Loan> findByUserAndReturnedFalse(String user);
 }

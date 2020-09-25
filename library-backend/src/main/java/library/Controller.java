@@ -63,13 +63,13 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/checkOutBook")
-  public Loan checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
+  public LoanEntry checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
     final List<Book> availableBooks = bookRepository.findAvailableBooksByIsbn(request.getIsbn());
     if(availableBooks.isEmpty()) throw new RuntimeException("No available copies of " + request.getIsbn());
 
     final Book firstAvailableBook = availableBooks.get(0);
 
-    Loan loan = new Loan();
+    final Loan loan = new Loan();
     loan.setBookOnLoan(firstAvailableBook);
     loan.setCheckoutDate(LocalDate.now());
     loan.setDueDate(LocalDate.now().plusWeeks(3));
@@ -77,37 +77,48 @@ class Controller {
 
     loanRepository.save(loan);
 
-    return loan;
+    final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), loan);
+    return response;
   }
 
 
   @CrossOrigin
   @GetMapping(path = "/api/allUserLoans")
   public List<LoanEntry> allUserLoans(@RequestParam String user) {
-
     return loanRepository
             .findByUser(user)
             .stream()
             .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
             .collect(Collectors.toList());
+  }
 
+
+  @CrossOrigin
+  @GetMapping(path = "/api/allActiveUserLoans")
+  public List<LoanEntry> allActiveUserLoans(@RequestParam String user) {
+    return loanRepository
+      .findByUserAndReturnedFalse(user)
+      .stream()
+      .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
+      .collect(Collectors.toList());
   }
 
 
   @CrossOrigin
   @PostMapping(path = "/api/returnBook")
-  public Loan returnBook(@RequestBody CheckoutOrReturnRequest request) {
+  public LoanEntry returnBook(@RequestBody CheckoutOrReturnRequest request) {
     List<Loan> activeLoans = loanRepository.findActiveLoansBy(request.getIsbn(), request.getUserId());
 
     System.out.println("getUserId: " + request.getUserId());
     if(activeLoans.isEmpty()) throw new RuntimeException("No active loans for user " + request.getUserId() + " and isbn " + request.getIsbn());
 
-    Loan earliestDueLoan = activeLoans.get(0);
+    final Loan earliestDueLoan = activeLoans.get(0);
     earliestDueLoan.setReturned(true);
 
     loanRepository.save(earliestDueLoan);
 
-    return earliestDueLoan;
+    final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), earliestDueLoan);
+    return response;
   }
 
 
