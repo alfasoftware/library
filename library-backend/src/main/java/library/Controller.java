@@ -70,9 +70,10 @@ class Controller {
     final Book firstAvailableBook = availableBooks.get(0);
 
     final Loan loan = new Loan();
+    final LocalDate now = LocalDate.now();
     loan.setBookOnLoan(firstAvailableBook);
-    loan.setCheckoutDate(LocalDate.now());
-    loan.setDueDate(LocalDate.now().plusWeeks(3));
+    loan.setCheckoutDate(now);
+    loan.setDueDate(now.plusMonths(1));
     loan.setUser(request.getUserId());
 
     loanRepository.save(loan);
