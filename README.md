@@ -1,8 +1,7 @@
 # Library App
 
-A simple web app to eventually replace the paper system currently used to loan books from the Alfa library. 
-
-It is a work-in-progress that was started during an Innovation Day March 2020.
+A web app to digitise the lending system for the Alfa office library. 
+The project is a work-in-progress and was initiated as part of the first remote Innovation Day in March 2020.
 
 ```
        .--.                   .---.
