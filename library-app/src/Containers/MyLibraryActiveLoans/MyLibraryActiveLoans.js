@@ -4,28 +4,10 @@ import mockedData from "./mockedLibrarydata.json";
 import { TiTick } from "react-icons/ti";
 import { IconContext } from "react-icons";
 import { ImCross } from "react-icons/im";
+import GreenTick from "../../UI/Icons/GreenTick";
+import RedCross from "../../UI/Icons/RedCross";
 
 const MyLibraryActiveLoans = (props) => {
-  const greenTick = (
-    <IconContext.Provider
-      value={{ color: "green", className: "global-class-name", size: "30px" }}
-    >
-      <div>
-        <TiTick style={{ marginLeft: "45px" }} />
-      </div>
-    </IconContext.Provider>
-  );
-
-  const redCross = (
-    <IconContext.Provider
-      value={{ color: "red", className: "global-class-name" }}
-    >
-      <div>
-        <ImCross style={{ marginLeft: "50px" }} />
-      </div>
-    </IconContext.Provider>
-  );
-
   const tableRows = mockedData.map((dataEntry) => {
     return (
       <tbody key={dataEntry.id}>
@@ -34,7 +16,7 @@ const MyLibraryActiveLoans = (props) => {
           <td>{dataEntry.checkoutDate}</td>
           <td>{dataEntry.dueDate}</td>
           <td style={{ margin: "auto", display: "flex" }}>
-            {dataEntry.requestedByOtherUser ? redCross : greenTick}
+            {dataEntry.requestedByOtherUser ? <RedCross /> : <GreenTick />}
           </td>
         </tr>
       </tbody>
