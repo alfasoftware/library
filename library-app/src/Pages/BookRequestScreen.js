@@ -14,8 +14,9 @@ const BookRequestScreen = (props) => {
     props.history.push("/");
   };
 
-  const handleSubmitAnotherBook = () => {
+  const handleBackToFullCatalogue = () => {
     handleClose();
+    props.history.push("/catalogue");
     // props.history.push("/requestBook");
     //Haven't quite got this working yet
   };
@@ -51,7 +52,7 @@ const BookRequestScreen = (props) => {
           <Button variant="success" onClick={handleGoHome}>
             Home
           </Button>
-          <Button variant="primary" onClick={handleSubmitAnotherBook}>
+          <Button variant="primary" onClick={handleBackToFullCatalogue}>
             Request another book
           </Button>
         </Modal.Footer>
