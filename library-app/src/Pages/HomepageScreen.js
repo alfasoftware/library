@@ -12,6 +12,7 @@ const HomepageScreen = (props) => {
       <ScreenHeaderImage
         title="Alfa Library"
         textColor="white"
+        height="250px"
         background={Background}
       />
       <BodyJumbotronContainer />

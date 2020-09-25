@@ -19,7 +19,7 @@ const ScreenHeaderImage = (props) => {
     backgroundPosition: "center",
     top: "-80px",
 
-    height: "400px",
+    height: props.height ? props.height : "400px",
     border: "1px solid gray",
     borderRadius: "0px",
     textAlign: "center",

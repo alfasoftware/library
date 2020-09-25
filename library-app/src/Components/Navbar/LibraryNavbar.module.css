@@ -1,0 +1,11 @@
+.alfaLogo {
+  margin-top: -15px;
+  filter: brightness(2.75);
+  filter: contrast(0);
+}
+
+.alfaLogo:hover {
+  filter: brightness(10);
+  filter: contrast(0.5);
+  /* filter: invert(); */
+}

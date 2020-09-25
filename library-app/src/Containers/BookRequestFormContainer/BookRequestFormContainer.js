@@ -6,7 +6,7 @@ const BookRequestFormContainer = (props) => {
     <div>
       <Form
         style={{
-          width: "80%",
+          width: "60%",
           margin: "auto",
           padding: "30px",
           border: "4px solid gray",
