@@ -1,6 +1,6 @@
 import React from "react";
 import LibraryNavbar from "../Components/Navbar/LibraryNavbar";
-import Background from "../assets/libraryWhite.jpg";
+import Background from "../assets/blurredLibraryWhite.jpg";
 import ScreenHeaderImage from "../Components/ScreenHeaderImage/ScreenHeaderImage";
 import MyLibraryActiveLoans from "../Containers/MyLibraryActiveLoans/MyLibraryActiveLoans";
 import { Container, Col, Row } from "react-bootstrap";
@@ -23,6 +23,7 @@ const MyLibraryScreen = () => {
           <Col></Col>
         </Row>
       </Container>
+      <a style={{ marginLeft: '.5rem' }} ></a>
       <MyLibraryActiveLoans />
     </div>
   );

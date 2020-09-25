@@ -30,10 +30,10 @@ const MyLibraryActiveLoans = (props) => {
     return (
       <tbody key={dataEntry.id}>
         <tr>
-          <td>{dataEntry.title}</td>
-          <td>{dataEntry.checkoutDate}</td>
-          <td>{dataEntry.dueDate}</td>
-          <td style={{ margin: "auto", display: "flex" }}>
+          <td >{dataEntry.title}</td>
+          <td class="text-center">{dataEntry.checkoutDate}</td>
+          <td class="text-center">{dataEntry.dueDate}</td>
+          <td style={{ display: "flex", justifyContent:"center", alignItems:"center"}}>
             {dataEntry.requestedByOtherUser ? redCross : greenTick}
           </td>
         </tr>
@@ -52,9 +52,9 @@ const MyLibraryActiveLoans = (props) => {
         <thead>
           <tr>
             <th>Book title</th>
-            <th>Check out date</th>
-            <th>Due date</th>
-            <th>Requested by another user?</th>
+            <th class="text-center">Check out date</th>
+            <th class="text-center">Due date</th>
+            <th class="text-center">Requested by another user?</th>
           </tr>
         </thead>
         {tableRows}
