@@ -24,7 +24,7 @@ class CatalogueTable extends Component {
           title: responseData.title,
           author: responseData.authors[0],
           imageUrl: imageUrl,
-          numberOfCopies: response.data[i].volume.totalItems,
+          numberOfCopies: response.data[i].availableCopies,
           //This is the 13 digit ISBN, for the 10 digit ISBN use industryIdentifier[0]
           isbn:
             response.data[i].volume.items[0].volumeInfo.industryIdentifiers[1]

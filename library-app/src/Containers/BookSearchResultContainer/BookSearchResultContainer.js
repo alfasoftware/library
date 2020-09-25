@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
 import Book from "../../Components/Book/Book";
 import axios from "axios";
+import { Modal, Button } from "react-bootstrap";
 
 const BookSearchResultContainer = (props) => {
-  console.log(props.history);
-
+  const [showModal, setShowModal] = useState(false);
   const [isbn, setisbn] = useState(null);
   const [bookInfo, setBookInfo] = useState(null);
+  const [checkoutBookResponse, setCheckoutBookResponse] = useState(null);
 
   useEffect(function updateIsbn() {
     let isbn = props.history.location.search;
@@ -38,12 +39,57 @@ const BookSearchResultContainer = (props) => {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleClose = () => setShowModal(false);
+
+  const handleGoHome = () => {
+    handleClose();
+    props.history.push("/");
+  };
+
+  const handleSubmitAnotherBook = () => {
+    handleClose();
+    // props.history.push("/requestBook");
+    //Haven't quite got this working yet
+  };
+
   const checkoutBookHandler = () => {
     console.log("Ohh ohh look at me I checked out a book");
+    const requestBody = {
+      isbn: isbn,
+      userId: "JimB",
+    };
+    axios
+      .post("http://localhost:8081/api/checkOutBook", requestBody)
+      .then((response) => {
+        setCheckoutBookResponse(response.data);
+
+        setShowModal(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Book checked out successfully!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Thank you for checking out {bookInfo ? bookInfo.title : null}. This
+          book is due to be returned on{" "}
+          {checkoutBookResponse ? checkoutBookResponse.dueDate : null}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleGoHome}>
+            Home
+          </Button>
+          <Button variant="primary" onClick={handleSubmitAnotherBook}>
+            Request another book
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {bookInfo ? (
         <Book
           title={bookInfo.title}

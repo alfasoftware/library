@@ -14,6 +14,13 @@ import StarRating from "../StarRating/StarRating";
 
 const Book = (props) => {
   let renderedBook = <LibrarySpinner />;
+
+  let subtext = props.subtitle;
+
+  if (!subtext) {
+    subtext = props.description.substring(0, 350) + "...";
+  }
+
   if (props.title) {
     renderedBook = (
       <div>
@@ -36,8 +43,8 @@ const Book = (props) => {
             <Col>
               <Image className={classes.Image} image={props.image} />
             </Col>
-            <Col xs={5}>
-              <h4>{props.subtitle}</h4>
+            <Col xs={5} style={{ marginRight: "20px" }}>
+              {subtext}
             </Col>
             <Col>
               <p>Publisher: {props.publisher}</p>
@@ -50,17 +57,13 @@ const Book = (props) => {
               <Button onClick={props.checkOutBook}>Check out book</Button>
             </Col>
             <Col>
-              <Button onClick>Add to watch list</Button>
+              <Button>Add to watch list</Button>
             </Col>
             <Col>
-              <Button onClick>Recommend to a friend</Button>
+              <Button>Recommend to a friend</Button>
             </Col>
           </Row>
         </Container>
-        {/* <Image className={classes.Image} image={props.image} />
-        <Title title={props.title} />
-        <Author author={props.author} />
-        <Category category={props.category} /> */}
       </div>
     );
   }

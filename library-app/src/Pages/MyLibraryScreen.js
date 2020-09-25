@@ -12,6 +12,7 @@ const MyLibraryScreen = () => {
       <ScreenHeaderImage
         title="My Library"
         textColor="charcoal"
+        height="250px"
         background={Background}
       />
       <Container>
@@ -23,7 +24,7 @@ const MyLibraryScreen = () => {
           <Col></Col>
         </Row>
       </Container>
-      <a style={{ marginLeft: '.5rem' }} ></a>
+      <a style={{ marginLeft: ".5rem" }}></a>
       <MyLibraryActiveLoans />
     </div>
   );
