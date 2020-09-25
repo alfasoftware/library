@@ -48,7 +48,7 @@ class VolumesCache {
 
   List<Volumes> searchByTitleOrAuthor(String searchString) {
     return isbnToVolumeCache.entrySet().stream()
-      .filter(e -> matchesBookInfo(searchString, e.getValue()))
+      .filter(e -> matchesBookInfo(searchString.toLowerCase(), e.getValue()))
       .map(Entry::getValue)
       .collect(Collectors.toList());
   }
@@ -67,10 +67,10 @@ class VolumesCache {
   private boolean matchesBookInfo(final String searchString, final Volumes v) {
     return v.getItems().stream()
       .map(Items::getVolumeInfo)
-      .anyMatch(volumeInfo -> volumeInfo.getDescription() != null && volumeInfo.getDescription().contains(searchString)
-          || (volumeInfo.getTitle() != null && volumeInfo.getTitle().contains(searchString))
-          || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().contains(searchString))
-         || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.contains(searchString)))
+      .anyMatch(volumeInfo -> volumeInfo.getDescription() != null && volumeInfo.getDescription().toLowerCase().contains(searchString)
+          || (volumeInfo.getTitle() != null && volumeInfo.getTitle().toLowerCase().contains(searchString))
+          || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
+          || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
       );
   }
 }
