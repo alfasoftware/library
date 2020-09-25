@@ -1,9 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import mockedData from "./mockedLibrarydata.json";
-import { TiTick } from "react-icons/ti";
-import { IconContext } from "react-icons";
-import { ImCross } from "react-icons/im";
 import GreenTick from "../../UI/Icons/GreenTick";
 import RedCross from "../../UI/Icons/RedCross";
 
