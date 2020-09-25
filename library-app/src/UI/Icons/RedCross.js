@@ -8,7 +8,7 @@ const RedCross = () => {
       value={{ color: "red", className: "global-class-name" }}
     >
       <div>
-        <ImCross style={{ marginLeft: "50px" }} />
+        <ImCross />
       </div>
     </IconContext.Provider>
   );

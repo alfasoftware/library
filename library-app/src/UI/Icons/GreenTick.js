@@ -8,7 +8,7 @@ const GreenTick = () => {
       value={{ color: "green", className: "global-class-name", size: "30px" }}
     >
       <div>
-        <TiTick style={{ marginLeft: "45px" }} />
+        <TiTick />
       </div>
     </IconContext.Provider>
   );

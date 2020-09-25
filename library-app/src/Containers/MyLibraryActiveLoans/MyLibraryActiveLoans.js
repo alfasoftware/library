@@ -8,7 +8,7 @@ const MyLibraryActiveLoans = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleClose = () => setShowModal(false);
-  
+
   const formSubmittedHandler = (event) => {
     event.preventDefault();
     setShowModal(!showModal);
@@ -17,45 +17,63 @@ const MyLibraryActiveLoans = (props) => {
   const handleReturn = (dataEntry) => {
     dataEntry.display = false;
     handleClose();
-  }
+  };
 
   const tableRows = mockedData.map((dataEntry) => {
     if (dataEntry.display) {
-    return (
-      <tbody key={dataEntry.id}>
-        <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Are you sure you want to return this book?</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <div class="text-center">
-          <Button variant="success" onClick={() => handleReturn(dataEntry)}>
-            Yes
-          </Button>
-          </div>
-          <div class="text-center">
-          <Button variant="primary" onClick={handleClose}>
-            No
-          </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
-        <tr>
-          <td>{dataEntry.title}</td>
-          <td class="text-center">{dataEntry.checkoutDate}</td>
-          <td class="text-center">{dataEntry.dueDate}</td>
-          <td style={{ display: "flex", justifyContent:"center", alignItems:"center"}}>
-            {dataEntry.requestedByOtherUser ? <RedCross /> : <GreenTick />}
-          </td>
-          <td class="text-center"><Button variant="primary" type="submit" onClick={formSubmittedHandler}>
-          Return
-        </Button></td>
-        </tr>
-      </tbody>
-    );
-    };
+      return (
+        <tbody key={dataEntry.id}>
+          <Modal show={showModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                Are you sure you want to return this book?
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Footer>
+              <div class="text-center">
+                <Button
+                  variant="success"
+                  onClick={() => handleReturn(dataEntry)}
+                >
+                  Yes
+                </Button>
+              </div>
+              <div class="text-center">
+                <Button variant="primary" onClick={handleClose}>
+                  No
+                </Button>
+              </div>
+            </Modal.Footer>
+          </Modal>
+          <tr>
+            <td>{dataEntry.title}</td>
+            <td class="text-center">{dataEntry.checkoutDate}</td>
+            <td class="text-center">{dataEntry.dueDate}</td>
+            <td
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                borderBottom: "transparent",
+              }}
+            >
+              {dataEntry.requestedByOtherUser ? <RedCross /> : <GreenTick />}
+            </td>
+            <td class="text-center">
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={formSubmittedHandler}
+              >
+                Return
+              </Button>
+            </td>
+          </tr>
+        </tbody>
+      );
+    }
   });
-
 
   return (
     <div>
