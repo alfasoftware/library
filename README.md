@@ -35,12 +35,12 @@ It is a work-in-progress that was started during an Innovation Day March 2020.
 ## Tech Stack
 
 ### Back-end
-- The back-end is a REST API built using [Spring Boot|https://spring.io/guides/gs/spring-boot/]
+- The back-end is a REST API built using [Spring Boot](https://spring.io/guides/gs/spring-boot/)
 - It has several end-points that the front-end calls upon to retrieve data. 
 
 ### Front-end
-- The front-end is built using the JavaScript library [React|https://reactjs.org/]
-- It uses [axios|https://www.npmjs.com/package/axios] to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.    
+- The front-end is built using the JavaScript library [React](https://reactjs.org/)
+- It uses [axios](https://npmjs.com/package/axios) to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.    
 
 ## To use the app
 - First, clone this repo
