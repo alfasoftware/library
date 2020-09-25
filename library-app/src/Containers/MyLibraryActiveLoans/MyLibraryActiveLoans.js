@@ -107,7 +107,7 @@ const MyLibraryActiveLoans = (props) => {
                   borderBottom: "transparent",
                 }}
               >
-                {dataEntry.requestedByOtherUser ? <RedCross /> : <GreenTick />}
+                {dataEntry.requestedByOtherUser ? <GreenTick /> : <RedCross />}
               </td>
               <td class="text-center">
                 <Button
