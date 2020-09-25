@@ -12,16 +12,7 @@ import com.google.api.client.util.Lists;
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Volumes {
 
-  private int totalItems;
   private List<Items> items = Lists.newArrayList();
-
-  public int getTotalItems() {
-    return totalItems;
-  }
-
-  public void setTotalItems(int totalItems) {
-    this.totalItems = totalItems;
-  }
 
   public List<Items> getItems() {
     return items;
