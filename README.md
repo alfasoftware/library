@@ -60,4 +60,4 @@ It is a work-in-progress that was started during an Innovation Day March 2020.
 
 The front-end is currently presenting a home page and a catalogue of the books in the library 
 
-The back-end currently stores a table of books and a table of loans. It utilises the [Google Books API|https://developers.google.com/books/] to retrieve full details of the books available in the library. There are several end-points for the front-end to call upon to retrieve and send data. 
+The back-end currently stores a table of books and a table of loans. It utilises the [Google Books API](https://developers.google.com/books/) to retrieve full details of the books available in the library. There are several end-points for the front-end to call upon to retrieve and send data. 
