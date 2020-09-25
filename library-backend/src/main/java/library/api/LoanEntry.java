@@ -1,12 +1,16 @@
-package library;
+package library.api;
 
 import java.time.LocalDate;
 
-import com.google.api.services.books.v1.model.Volume;
+import library.Loan;
 
+
+/**
+ * Wrapper for a {@link Loan}, with information about the {@link Volumes}.
+ */
 public class LoanEntry {
 
-  private final Volume volume;
+  private final Volumes volume;
 
   private final String user;
 
@@ -16,7 +20,7 @@ public class LoanEntry {
 
   private final boolean returned;
 
-  public LoanEntry(Volume volume, Loan loan) {
+  public LoanEntry(Volumes volume, Loan loan) {
     this.volume = volume;
     this.user = loan.getUser();
     this.checkoutDate = loan.getCheckoutDate();
@@ -25,7 +29,7 @@ public class LoanEntry {
   }
 
 
-  public Volume getVolume() {
+  public Volumes getVolume() {
     return volume;
   }
 

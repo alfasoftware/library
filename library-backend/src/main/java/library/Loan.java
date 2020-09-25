@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-class Loan {
+public class Loan {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -65,7 +65,7 @@ class Loan {
     return dueDate;
   }
 
-  public void setDueDate(LocalDate dueDate) {
+  void setDueDate(LocalDate dueDate) {
     this.dueDate = dueDate;
   }
 
@@ -73,7 +73,7 @@ class Loan {
     return returned;
   }
 
-  public void setReturned(boolean returned) {
+  void setReturned(boolean returned) {
     this.returned = returned;
   }
 }

@@ -1,7 +1,6 @@
 package library;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,27 +9,25 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import com.google.api.services.books.v1.model.Volume;
-
-import static java.util.stream.Collectors.toCollection;
+import library.api.CheckoutOrReturnRequest;
+import library.api.LoanEntry;
+import library.api.Volumes;
 
 @RestController
 class Controller {
 
   private final BookRepository bookRepository;
   private final LoanRepository loanRepository;
-  private final VolumeCache volumeCache;
+  private final VolumesCache volumesCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final VolumeCache volumeCache) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final VolumesCache volumesCache) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
-    this.volumeCache = volumeCache;
+    this.volumesCache = volumesCache;
   }
 
 
@@ -39,28 +36,28 @@ class Controller {
   public List<CatalogueEntry> getCatalogue() {
     return bookRepository.getAllIsbnsToAvailableCopies()
       .stream()
-      .map(b -> new CatalogueEntry(volumeCache.getFor(b.getIsbn()), b.getAvailableCopies()))
+      .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getAvailableCopies()))
       .collect(Collectors.toList());
   }
 
 
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
-  public Volume addNewBook(@RequestBody long isbn) {
+  public Volumes addNewBook(@RequestBody long isbn) {
     // Save isbn to our database of books
     final Book bookToSave = new Book();
     bookToSave.setIsbn(isbn);
     bookRepository.save(bookToSave);
 
     // Cache detailed volume information and return.
-    return volumeCache.getFor(isbn);
+    return volumesCache.getFor(isbn);
   }
 
 
   @CrossOrigin
   @GetMapping(path = "/api/volumeDetails")
-  public Volume getVolumeDetails(@RequestParam long isbn) {
-    return volumeCache.getFor(isbn);
+  public Volumes getVolumeDetails(@RequestParam long isbn) {
+    return volumesCache.getFor(isbn);
   }
 
 
@@ -91,7 +88,7 @@ class Controller {
     return loanRepository
             .findByUser(user)
             .stream()
-            .map(l -> new LoanEntry(volumeCache.getFor(l.getBookOnLoan().getIsbn()), l))
+            .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
             .collect(Collectors.toList());
 
   }
@@ -116,7 +113,7 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/search")
-  public List<Volume> search(@RequestBody String searchString) {
-    return volumeCache.searchByTitleOrAuthor(searchString);
+  public List<Volumes> search(@RequestBody String searchString) {
+    return volumesCache.searchByTitleOrAuthor(searchString);
   }
 }

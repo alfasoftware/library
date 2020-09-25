@@ -1,18 +1,18 @@
 package library;
 
-import com.google.api.services.books.v1.model.Volume;
+import library.api.Volumes;
 
 class CatalogueEntry {
 
-  private final Volume volume;
+  private final Volumes volume;
   private final long availableCopies;
 
-  CatalogueEntry(final Volume volume, final long availableCopies) {
+  CatalogueEntry(final Volumes volume, final long availableCopies) {
     this.volume = volume;
     this.availableCopies = availableCopies;
   }
 
-  public Volume getVolume() {
+  public Volumes getVolume() {
     return volume;
   }
 
