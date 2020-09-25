@@ -12,12 +12,18 @@ class CatalogueTable extends Component {
     axios.get("http://localhost:8081/api/catalogue").then((response) => {
       let arr = [];
       for (let i = 0; i < response.data.length; i++) {
+        const responseData = response.data[i].volume.items[0].volumeInfo;
+
+        let imageUrl = null;
+        if (responseData.imageLinks) {
+          imageUrl = responseData.imageLinks.thumbnail;
+        }
+
         let obj = {
           key: i,
-          title: response.data[i].volume.items[0].volumeInfo.title,
-          author: response.data[i].volume.items[0].volumeInfo.authors[0],
-          imageUrl:
-            response.data[i].volume.items[0].volumeInfo.imageLinks.thumbnail,
+          title: responseData.title,
+          author: responseData.authors[0],
+          imageUrl: imageUrl,
           numberOfCopies: response.data[i].volume.totalItems,
           //This is the 13 digit ISBN, for the 10 digit ISBN use industryIdentifier[0]
           isbn:
@@ -55,7 +61,11 @@ class CatalogueTable extends Component {
             <tr onClick={() => this.clickRow(bookEntry.isbn)}>
               <td style={{ border: "none" }}>{bookEntry.title}</td>
               <td>
-                <img src={bookEntry.imageUrl} className={classes.thumbnail} />
+                <img
+                  src={bookEntry.imageUrl}
+                  className={classes.thumbnail}
+                  alt="I'm sorry, no image is available for this title"
+                />
               </td>
               <td rowSpan="2">{bookEntry.author}</td>
               <td rowSpan="2">{bookEntry.numberOfCopies}</td>
