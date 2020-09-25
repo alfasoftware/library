@@ -35,12 +35,12 @@ It is a work-in-progress that was started during an Innovation Day March 2020.
 ## Tech Stack
 
 ### Back-end
-- The back-end is a REST API built using [Spring Boot|https://spring.io/guides/gs/spring-boot/]
+- The back-end is a REST API built using [Spring Boot](https://spring.io/guides/gs/spring-boot/)
 - It has several end-points that the front-end calls upon to retrieve data. 
 
 ### Front-end
-- The front-end is built using the JavaScript library [React|https://reactjs.org/]
-- It uses [axios|https://www.npmjs.com/package/axios] to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.    
+- The front-end is built using the JavaScript library [React](https://reactjs.org/)
+- It uses [axios](https://npmjs.com/package/axios) to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.    
 
 ## To use the app
 - First, clone this repo
@@ -60,4 +60,4 @@ It is a work-in-progress that was started during an Innovation Day March 2020.
 
 The front-end is currently presenting a home page and a catalogue of the books in the library 
 
-The back-end currently stores a table of books and a table of loans. It utilises the [Google Books API|https://developers.google.com/books/] to retrieve full details of the books available in the library. There are several end-points for the front-end to call upon to retrieve and send data. 
+The back-end currently stores a table of books and a table of loans. It utilises the [Google Books API](https://developers.google.com/books/) to retrieve full details of the books available in the library. There are several end-points for the front-end to call upon to retrieve and send data. 
