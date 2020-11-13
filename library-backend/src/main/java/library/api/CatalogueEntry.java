@@ -4,9 +4,9 @@ public class CatalogueEntry {
 
   private final Volumes volume;
   private final long availableCopies;
-  private final long isbn;
+  private final String isbn;
 
-  public CatalogueEntry(final Volumes volume, final long availableCopies, long isbn) {
+  public CatalogueEntry(final Volumes volume, final long availableCopies, String isbn) {
     this.volume = volume;
     this.availableCopies = availableCopies;
     this.isbn = isbn;
@@ -20,7 +20,7 @@ public class CatalogueEntry {
     return availableCopies;
   }
 
-  public long getIsbn() {
+  public String getIsbn() {
     return isbn;
   }
 }

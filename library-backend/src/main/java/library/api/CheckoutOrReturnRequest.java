@@ -2,15 +2,15 @@ package library.api;
 
 public class CheckoutOrReturnRequest {
 
-  private final long isbn;
+  private final String isbn;
   private final String userId;
 
-  public CheckoutOrReturnRequest(final long isbn, final String userId) {
+  public CheckoutOrReturnRequest(final String isbn, final String userId) {
     this.isbn = isbn;
     this.userId = userId;
   }
 
-  public long getIsbn() {
+  public String getIsbn() {
     return isbn;
   }
 

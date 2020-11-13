@@ -48,7 +48,7 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
-  public Volumes addNewBook(@RequestBody long isbn) {
+  public Volumes addNewBook(@RequestBody String isbn) {
     // Cache detailed volume information and return.
     Volumes volumes = volumesCache.getFor(isbn);
     if (volumes.getItems().isEmpty()) {
@@ -66,7 +66,7 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/volumeDetails")
-  public Volumes getVolumeDetails(@RequestParam long isbn) {
+  public Volumes getVolumeDetails(@RequestParam String isbn) {
     return volumesCache.getFor(isbn);
   }
 
