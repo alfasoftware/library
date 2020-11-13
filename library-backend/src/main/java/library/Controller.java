@@ -3,6 +3,7 @@ package library;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +18,7 @@ import library.api.CheckoutOrReturnRequest;
 import library.api.Items;
 import library.api.LoanEntry;
 import library.api.SearchResult;
+import library.api.VolumeInfo;
 import library.api.Volumes;
 
 @RestController
@@ -38,9 +40,9 @@ class Controller {
   @GetMapping(path = "/api/catalogue")
   public List<CatalogueEntry> getCatalogue() {
     return bookRepository.getAllIsbnsToAvailableCopies()
-      .stream()
-      .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getAvailableCopies()))
-      .collect(Collectors.toList());
+        .stream()
+        .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getAvailableCopies(), b.getIsbn()))
+        .collect(Collectors.toList());
   }
 
 
@@ -73,7 +75,7 @@ class Controller {
   @PostMapping(path = "/api/checkOutBook")
   public LoanEntry checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
     final List<Book> availableBooks = bookRepository.findAvailableBooksByIsbn(request.getIsbn());
-    if(availableBooks.isEmpty()) throw new RuntimeException("No available copies of " + request.getIsbn());
+    if (availableBooks.isEmpty()) throw new RuntimeException("No available copies of " + request.getIsbn());
 
     final Book firstAvailableBook = availableBooks.get(0);
 
@@ -95,10 +97,10 @@ class Controller {
   @GetMapping(path = "/api/allUserLoans")
   public List<LoanEntry> allUserLoans(@RequestParam String user) {
     return loanRepository
-            .findByUser(user)
-            .stream()
-            .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
-            .collect(Collectors.toList());
+        .findByUser(user)
+        .stream()
+        .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
+        .collect(Collectors.toList());
   }
 
 
@@ -106,10 +108,10 @@ class Controller {
   @GetMapping(path = "/api/allActiveUserLoans")
   public List<LoanEntry> allActiveUserLoans(@RequestParam String user) {
     return loanRepository
-      .findByUserAndReturnedFalse(user)
-      .stream()
-      .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
-      .collect(Collectors.toList());
+        .findByUserAndReturnedFalse(user)
+        .stream()
+        .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
+        .collect(Collectors.toList());
   }
 
 
@@ -119,7 +121,8 @@ class Controller {
     List<Loan> activeLoans = loanRepository.findActiveLoansBy(request.getIsbn(), request.getUserId());
 
     System.out.println("getUserId: " + request.getUserId());
-    if(activeLoans.isEmpty()) throw new RuntimeException("No active loans for user " + request.getUserId() + " and isbn " + request.getIsbn());
+    if (activeLoans.isEmpty())
+      throw new RuntimeException("No active loans for user " + request.getUserId() + " and isbn " + request.getIsbn());
 
     final Loan earliestDueLoan = activeLoans.get(0);
     earliestDueLoan.setReturned(true);
@@ -134,9 +137,7 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/search")
   public List<CatalogueEntry> search(@RequestParam String searchString) {
-    return getCatalogue()
-        .stream()
-        .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()))
+    return getCatalogueFilteredBy(searchString)
         .collect(Collectors.toList());
   }
 
@@ -144,13 +145,22 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/searchWithLimit")
   public List<SearchResult> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
+    return getCatalogueFilteredBy(searchString)
+        .limit(maxNoOfResults)
+        .map(ce -> {
+          final VolumeInfo volumeInfo = ce.getVolume().getItems().get(0).getVolumeInfo(); // We know there is at least one due to the condition when adding new books - so just get the first
+          return new SearchResult(ce.getIsbn(), volumeInfo.getTitle(), volumeInfo.getImageLinks());
+        })
+        .collect(Collectors.toList());
+  }
+
+
+  private Stream<CatalogueEntry> getCatalogueFilteredBy(@RequestParam String searchString) {
     return getCatalogue()
         .stream()
-        .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()))
-        .limit(maxNoOfResults)
-        .map(ce -> new )
-        .collect(Collectors.toList());
-}
+        .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()));
+  }
+
 
   private boolean matchesBookInfo(final String searchString, final Volumes v) {
     return v.getItems().stream()
