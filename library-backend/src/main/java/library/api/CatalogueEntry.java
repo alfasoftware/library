@@ -1,13 +1,11 @@
-package library;
+package library.api;
 
-import library.api.Volumes;
-
-class CatalogueEntry {
+public class CatalogueEntry {
 
   private final Volumes volume;
   private final long availableCopies;
 
-  CatalogueEntry(final Volumes volume, final long availableCopies) {
+  public CatalogueEntry(final Volumes volume, final long availableCopies) {
     this.volume = volume;
     this.availableCopies = availableCopies;
   }
