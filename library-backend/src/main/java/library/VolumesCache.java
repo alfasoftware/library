@@ -41,16 +41,10 @@ class VolumesCache {
       .forEach(this::getVolumesAndAddToCache);
   }
 
+
   Volumes getFor(long isbn) {
     return Optional.ofNullable(isbnToVolumeCache.get(isbn))
       .orElseGet(() -> getVolumesAndAddToCache(isbn));
-  }
-
-  List<Volumes> searchByTitleOrAuthor(String searchString, long maxNoOfResults) {
-    return isbnToVolumeCache.values().stream()
-            .filter(volumes -> matchesBookInfo(searchString.toLowerCase(), volumes))
-            .limit(maxNoOfResults)
-            .collect(Collectors.toList());
   }
 
 
@@ -62,15 +56,5 @@ class VolumesCache {
     isbnToVolumeCache.get(isbn);
 
     return volumeToCache;
-  }
-
-  private boolean matchesBookInfo(final String searchString, final Volumes v) {
-    return v.getItems().stream()
-      .map(Items::getVolumeInfo)
-      .anyMatch(volumeInfo -> volumeInfo.getDescription() != null && volumeInfo.getDescription().toLowerCase().contains(searchString)
-          || (volumeInfo.getTitle() != null && volumeInfo.getTitle().toLowerCase().contains(searchString))
-          || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
-          || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
-      );
   }
 }

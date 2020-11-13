@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import library.api.CatalogueEntry;
 import library.api.CheckoutOrReturnRequest;
+import library.api.Items;
 import library.api.LoanEntry;
 import library.api.Volumes;
 
@@ -131,14 +132,28 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/search")
-  public List<Volumes> search(@RequestParam String searchString) {
+  public List<CatalogueEntry> search(@RequestParam String searchString) {
     return searchWithLimit(searchString, 1000);
   }
 
 
   @CrossOrigin
   @GetMapping(path = "/api/searchWithLimit")
-  public List<Volumes> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
-    return volumesCache.searchByTitleOrAuthor(searchString, maxNoOfResults);
+  public List<CatalogueEntry> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
+    return getCatalogue()
+        .stream()
+        .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()))
+        .limit(maxNoOfResults)
+        .collect(Collectors.toList());
+}
+
+  private boolean matchesBookInfo(final String searchString, final Volumes v) {
+    return v.getItems().stream()
+        .map(Items::getVolumeInfo)
+        .anyMatch(volumeInfo -> volumeInfo.getDescription() != null && volumeInfo.getDescription().toLowerCase().contains(searchString)
+            || (volumeInfo.getTitle() != null && volumeInfo.getTitle().toLowerCase().contains(searchString))
+            || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
+            || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
+        );
   }
 }
