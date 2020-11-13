@@ -49,6 +49,8 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody String isbn) {
+    isbn = isbn.replace("-", "");
+
     // Cache detailed volume information and return.
     Volumes volumes = volumesCache.getFor(isbn);
     if (volumes.getItems().isEmpty()) {
