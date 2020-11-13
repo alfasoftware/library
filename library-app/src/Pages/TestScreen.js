@@ -9,6 +9,7 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import DropdownMenu from "../UI/Dropdown/DropdownMenu"
 import LibraryNavbar from "../Components/Navbar/LibraryNavbar";
 
 const TestScreen = (props) => {
@@ -24,6 +25,7 @@ const TestScreen = (props) => {
           <Col>1 of 3</Col>
           <Col>2 of 3</Col>
           <Col>3 of 3</Col>
+          <DropdownMenu />
         </Row>
       </Container>
     </div>
