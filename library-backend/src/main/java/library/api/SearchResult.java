@@ -4,31 +4,26 @@ import java.util.Map;
 
 public class SearchResult {
 
-  private long isbn;
-  private String title;
-  private  Map<String, String> imageLinks;
+  private final long isbn;
+  private final String title;
+  private final Map<String, String> imageLinks;
+
+  public SearchResult(long isbn, String title, Map<String, String> imageLinks) {
+    this.isbn = isbn;
+    this.title = title;
+    this.imageLinks = imageLinks;
+  }
 
   public long getIsbn() {
     return isbn;
-  }
-
-  public void setIsbn(long isbn) {
-    this.isbn = isbn;
   }
 
   public String getTitle() {
     return title;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
   public Map<String, String> getImageLinks() {
     return imageLinks;
   }
 
-  public void setImageLinks(Map<String, String> imageLinks) {
-    this.imageLinks = imageLinks;
-  }
 }

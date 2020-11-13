@@ -16,6 +16,7 @@ import library.api.CatalogueEntry;
 import library.api.CheckoutOrReturnRequest;
 import library.api.Items;
 import library.api.LoanEntry;
+import library.api.SearchResult;
 import library.api.Volumes;
 
 @RestController
@@ -133,17 +134,21 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/search")
   public List<CatalogueEntry> search(@RequestParam String searchString) {
-    return searchWithLimit(searchString, 1000);
+    return getCatalogue()
+        .stream()
+        .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()))
+        .collect(Collectors.toList());
   }
 
 
   @CrossOrigin
   @GetMapping(path = "/api/searchWithLimit")
-  public List<CatalogueEntry> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
+  public List<SearchResult> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
     return getCatalogue()
         .stream()
         .filter(catalogueEntry -> matchesBookInfo(searchString.toLowerCase(), catalogueEntry.getVolume()))
         .limit(maxNoOfResults)
+        .map(ce -> new )
         .collect(Collectors.toList());
 }
 
