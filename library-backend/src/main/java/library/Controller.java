@@ -45,6 +45,10 @@ class Controller {
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody long isbn) {
     // Save isbn to our database of books
+    Volumes volumes = volumesCache.getFor(isbn);
+    if (volumes.getItems().isEmpty()) {
+      throw new IllegalArgumentException("No volumes were found for the IBSN: " + isbn);
+    }
     final Book bookToSave = new Book();
     bookToSave.setIsbn(isbn);
     bookRepository.save(bookToSave);
