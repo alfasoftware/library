@@ -4,20 +4,23 @@
     "direction": "row",
     "title": "Find a book",
     "subTitle": "Browse the entire collection of books in the Alfa library or search to find something right for you",
-    "image": "assets/findBook2.jpg"
+    "image": "assets/findBook2.jpg",
+    "redirectLink": "/catalogue"
   },
   {
     "id": 2,
     "direction": "row-reverse",
     "title": "Request resources",
     "subTitle": "Put in a request for a new book to help expand our collection",
-    "image": "assets/requestBook.jpg"
+    "image": "assets/requestBook.jpg",
+    "redirectLink": "/requestBook"
   },
   {
     "id": 3,
     "direction": "row",
     "title": "My Library",
     "subTitle": "Manage your checked out books and keep on top of return times with the My Library feature",
-    "image": "assets/myLibrary.jpg"
+    "image": "assets/myLibrary.jpg",
+    "redirectLink": "/myLibrary"
   }
 ]
