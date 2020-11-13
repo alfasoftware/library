@@ -46,11 +46,11 @@ class VolumesCache {
       .orElseGet(() -> getVolumesAndAddToCache(isbn));
   }
 
-  List<Volumes> searchByTitleOrAuthor(String searchString) {
-    return isbnToVolumeCache.entrySet().stream()
-      .filter(e -> matchesBookInfo(searchString.toLowerCase(), e.getValue()))
-      .map(Entry::getValue)
-      .collect(Collectors.toList());
+  List<Volumes> searchByTitleOrAuthor(String searchString, long maxNoOfResults) {
+    return isbnToVolumeCache.values().stream()
+            .filter(volumes -> matchesBookInfo(searchString.toLowerCase(), volumes))
+            .limit(maxNoOfResults)
+            .collect(Collectors.toList());
   }
 
 
