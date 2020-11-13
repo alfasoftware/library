@@ -13,6 +13,7 @@ class CatalogueTable extends Component {
     axios.get("http://localhost:8081/api/catalogue").then((response) => {
       let arr = [];
       for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].volume.items[0]) {
         const responseData = response.data[i].volume.items[0].volumeInfo;
 
         let imageUrl = null;
@@ -32,7 +33,8 @@ class CatalogueTable extends Component {
               .identifier,
         };
         arr.push(obj);
-      }
+        } 
+       }
       this.setState({ bookData: arr });
     });
   }
