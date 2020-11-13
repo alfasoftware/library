@@ -1,34 +1,13 @@
 import React, { Component } from "react";
 import classes from "./SearchBar.module.css";
+import { Form, Button, FormControl } from "react-bootstrap";
 
-class SearchBar extends Component {
-  state = {};
+const SearchBar = () => {
 
-  constructor(props) {
-    super(props);
-    console.log("SearchBar constructor");
-  }
-
-  render() {
-    return (
-      <div>
-        <input
-          className={classes.SearchBar}
-          value={this.props.searchText}
-          onChange={(event) => this.props.onTextInput(event)}
-          placeholder="Enter an ISBN here"
-        >
-          {this.props.searchText}
-        </input>
-        <button
-          className={classes.Button}
-          onClick={() => this.props.onSearch()}
-        >
-          Search
-        </button>
-      </div>
-    );
-  }
-}
+  return (<Form inline>
+    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <Button variant="outline-primary">Search</Button>
+  </Form>
+  )}
 
 export default SearchBar;

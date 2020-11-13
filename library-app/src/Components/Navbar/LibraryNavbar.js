@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./LibraryNavbar.module.css";
 import { Navbar, Nav, Form, Button, FormControl } from "react-bootstrap";
+import SearchBar from "../SearchBar/SearchBar"
 
 const LibraryNavbar = () => {
   return (
@@ -26,10 +27,7 @@ const LibraryNavbar = () => {
           <Nav.Link href="/myLibrary">My Library</Nav.Link>
           <Nav.Link href="/requestBook">Book Request</Nav.Link>
         </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-primary">Search</Button>
-        </Form>
+        <SearchBar />
       </Navbar>
     </div>
   );
