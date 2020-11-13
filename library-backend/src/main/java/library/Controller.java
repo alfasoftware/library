@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import library.api.CatalogueEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import library.api.CatalogueEntry;
 import library.api.CheckoutOrReturnRequest;
 import library.api.LoanEntry;
 import library.api.Volumes;
@@ -130,7 +130,7 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/search")
-  public List<Volumes> search(@RequestBody String searchString) {
+  public List<Volumes> search(@RequestParam String searchString) {
     return volumesCache.searchByTitleOrAuthor(searchString, 1000);
   }
 

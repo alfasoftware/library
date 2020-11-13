@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
 import { Redirect } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import classes from "./CatalogueTableComponent.module.css"
 
 const CatalogueTableComponent = ( props ) => {
+
+  const [redirectLink, setRedirectLink] = useState("")
         let redirectComponent = null;
-        if (props.redirectLink) {
-          const redirectString = "/books?" + props.redirectLink.redirectIsbn;
+        if (redirectLink) {
+          const redirectString = "/books?" + redirectLink;
           redirectComponent = <Redirect to={redirectString} />;
         }
     
@@ -15,7 +17,7 @@ const CatalogueTableComponent = ( props ) => {
           data = props.bookData.map((bookEntry) => {
             return (
               <tbody key={bookEntry.key}>
-                <tr onClick={() => props.clickRow(bookEntry.isbn)}>
+                <tr onClick={() => setRedirectLink(bookEntry.isbn)}>
                   <td style={{ border: "none" }}>{bookEntry.title}</td>
                   <td>
                     <img
@@ -27,11 +29,6 @@ const CatalogueTableComponent = ( props ) => {
                   <td rowSpan="2">{bookEntry.author}</td>
                   <td rowSpan="2">{bookEntry.numberOfCopies}</td>
                 </tr>
-                {/* <tr onClick={() => this.clickRow(bookEntry.isbn)}>
-                  <td>
-                    <img src={bookEntry.imageUrl} className={classes.thumbnail} />
-                  </td>
-                </tr> */}
               </tbody>
             );
           });

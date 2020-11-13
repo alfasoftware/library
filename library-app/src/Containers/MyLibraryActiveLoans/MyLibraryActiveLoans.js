@@ -79,7 +79,7 @@ const MyLibraryActiveLoans = (props) => {
                 </Modal.Title>
               </Modal.Header>
               <Modal.Footer>
-                <div class="text-center">
+                <div className="text-center">
                   <Button
                     variant="success"
                     onClick={() => handleReturn(dataEntry)}
@@ -87,7 +87,7 @@ const MyLibraryActiveLoans = (props) => {
                     Yes
                   </Button>
                 </div>
-                <div class="text-center">
+                <div className="text-center">
                   <Button variant="primary" onClick={handleClose}>
                     No
                   </Button>
@@ -96,8 +96,8 @@ const MyLibraryActiveLoans = (props) => {
             </Modal>
             <tr>
               <td>{dataEntry.title}</td>
-              <td class="text-center">{dataEntry.checkoutDate}</td>
-              <td class="text-center">{dataEntry.dueDate}</td>
+              <td className="text-center">{dataEntry.checkoutDate}</td>
+              <td className="text-center">{dataEntry.dueDate}</td>
               <td
                 style={{
                   display: "flex",
@@ -109,7 +109,7 @@ const MyLibraryActiveLoans = (props) => {
               >
                 {dataEntry.requestedByOtherUser ? <GreenTick /> : <RedCross />}
               </td>
-              <td class="text-center">
+              <td className="text-center">
                 <Button
                   variant="primary"
                   type="submit"
@@ -136,10 +136,10 @@ const MyLibraryActiveLoans = (props) => {
         <thead>
           <tr>
             <th>Book title</th>
-            <th class="text-center">Check out date</th>
-            <th class="text-center">Due date</th>
-            <th class="text-center">Requested by another user?</th>
-            <th class="text-center">Return Book</th>
+            <th className="text-center">Check out date</th>
+            <th className="text-center">Due date</th>
+            <th className="text-center">Requested by another user?</th>
+            <th className="text-center">Return Book</th>
           </tr>
         </thead>
         {tableRows}

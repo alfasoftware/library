@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import { Table } from "react-bootstrap";
-import BookData from "./BookData.json";
 import axios from "axios";
-import classes from "./CatalogueTable.module.css";
-import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
 import CatalogueTableComponent  from "../../Components/CatalogueTableComponent/CatalogueTableComponent"
 
@@ -39,18 +35,11 @@ class CatalogueTable extends Component {
     });
   }
 
-  clickRow = (isbn) => {
-    console.log("Row was clicked with isbn= " + isbn);
-    this.setState({
-      redirectLink: null 
-    });
-  };
-
   render() {
     return (
       <div>
-        { this.state.bookData  ? (
-          <CatalogueTableComponent bookData={this.state.bookData} redirectLink={this.state.redirectLink} clickRow={(isbn) => this.clickRow(isbn)}/>
+        { this.state.bookData ? (
+          <CatalogueTableComponent bookData={this.state.bookData}  />
         ) : (
           <p>No books were found in the database</p>
         )}
