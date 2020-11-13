@@ -45,17 +45,18 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody long isbn) {
-    // Save isbn to our database of books
+    // Cache detailed volume information and return.
     Volumes volumes = volumesCache.getFor(isbn);
     if (volumes.getItems().isEmpty()) {
       throw new IllegalArgumentException("No volumes were found for the IBSN: " + isbn);
     }
+
+    // Save isbn to our database of books
     final Book bookToSave = new Book();
     bookToSave.setIsbn(isbn);
     bookRepository.save(bookToSave);
 
-    // Cache detailed volume information and return.
-    return volumesCache.getFor(isbn);
+    return volumes;
   }
 
 
