@@ -45,6 +45,10 @@ class Controller {
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody long isbn) {
     // Save isbn to our database of books
+    Volumes volumes = volumesCache.getFor(isbn);
+    if (volumes.getItems().isEmpty()) {
+      throw new IllegalArgumentException("No volumes were found for the IBSN: " + isbn);
+    }
     final Book bookToSave = new Book();
     bookToSave.setIsbn(isbn);
     bookRepository.save(bookToSave);
@@ -126,6 +130,13 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/search")
   public List<Volumes> search(@RequestBody String searchString) {
-    return volumesCache.searchByTitleOrAuthor(searchString);
+    return volumesCache.searchByTitleOrAuthor(searchString, 1000);
+  }
+
+
+  @CrossOrigin
+  @GetMapping(path = "/api/searchWithLimit")
+  public List<Volumes> searchWithLimit(@RequestParam String searchString, @RequestParam long maxNoOfResults) {
+    return volumesCache.searchByTitleOrAuthor(searchString, maxNoOfResults);
   }
 }
