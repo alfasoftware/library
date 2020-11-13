@@ -132,7 +132,7 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/search")
   public List<Volumes> search(@RequestParam String searchString) {
-    return volumesCache.searchByTitleOrAuthor(searchString, 1000);
+    return searchWithLimit(searchString, 1000);
   }
 
 
