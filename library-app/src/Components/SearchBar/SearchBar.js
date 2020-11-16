@@ -7,22 +7,52 @@ import DropdownMenu from "../../UI/Dropdown/DropdownMenu";
 
 const SearchBar = () => {
 
-  const [searchParam, setSearchParam] = useState("");
+  const [bookData, setBookData] = useState(null);
   const [value, setValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [redirectLink, setRedirectLink] = useState("");
 
+  useEffect(() => {
+    axios.get("http://localhost:8081/api/search?searchString=" + inputValue + "&maxNoOfResults=5").then((response) => {
+      console.log(response)
+      setBookData(response.data)
 
+    }).catch();
+  }, [inputValue, value]);
+
+
+  if (bookData) {
+    console.log(bookData.map((book) => {
+      return ( book.volume.items[0].volumeInfo.title)
+    }))
+  }
 const inputChangedHandler = (newVal) => {
-  console.log("input changed handler invoked");
-  setSearchParam(newVal);
+  console.log("input changed handler invoked with " + newVal)
+  setInputValue(newVal)
 
 }
 
 const valueChangedHandler = (newVal) => {
-  console.log("value changed handler invoked")
+  console.log("value changed handler invoked with " + newVal)
 
-const redirectString = "/books?" + newVal;
+  setValue(newVal);
+
+  const filteredBookList = bookData.filter(book => book.volume.items[0].volumeInfo.title == newVal);
+
+  if (filteredBookList[0]) {
+  const isbnOfDesiredBook = filteredBookList[0].isbn;
+  console.log(isbnOfDesiredBook);
+
+const redirectString = "/books?" + isbnOfDesiredBook;
 setRedirectLink(redirectString)
+  }
+}
+
+const formSubmittedHandler = (e) => {
+  e.preventDefault();
+
+  searchClickedHandler();
+
 }
 
 
@@ -35,15 +65,16 @@ setRedirectLink(redirectString)
 
   const searchClickedHandler = () => {
     console.log("search clicked handler invoked")
-      const redirectString = "/searchResults?queryParams=" + searchParam;
+      const redirectString = "/searchResults?queryParams=" + inputValue;
       setRedirectLink(redirectString);
     }
 
   return (
-  <Form inline>
+  <Form inline onSubmit={(e) => formSubmittedHandler(e)}>
   {redirectComponent} 
-  <DropdownMenu value={searchParam} valueChanged={(newVal) => valueChangedHandler(newVal)} inputChanged={(newVal) => inputChangedHandler(newVal)}/>
-    {/* <FormControl type="text" placeholder="Search" className="mr-sm-2" value={searchParam} onChange={(e) => setSearchParam(e.target.value)}/> */}
+  <DropdownMenu value={value} valueChanged={(newVal) => valueChangedHandler(newVal)} inputValue={inputValue} inputChanged={(newVal) => inputChangedHandler(newVal)} options={bookData !== null ? bookData.map((book) => {
+      return ( book.volume.items[0].volumeInfo.title)
+    }) : []}/>
     <Button variant="outline-primary" onClick={searchClickedHandler}>Search</Button>
   </Form>
   )

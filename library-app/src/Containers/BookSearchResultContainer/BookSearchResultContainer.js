@@ -24,20 +24,20 @@ const BookSearchResultContainer = (props) => {
         const responsePretext = response.data.items[0].volumeInfo;
 
         let obj = {
-          title: responsePretext.title,
-          author: responsePretext.authors[0],
+          title: responsePretext.title ? responsePretext.title : "No title is available for this book",
+          author: responsePretext.authors[0] ? responsePretext.authors[0] : "No author information could be retrieved for this book",
           imageUrl: responsePretext.imageLinks.thumbnail,
           isbn: responsePretext.industryIdentifiers[0].identifier,
-          subtitle: responsePretext.subtitle,
-          publisher: responsePretext.publisher,
-          publishedDate: responsePretext.publishedDate,
-          description: responsePretext.description,
+          subtitle: responsePretext.subtitle ? responsePretext.subtitle : "No subtitle was available for this book",
+          publisher: responsePretext.publisher ? responsePretext.publisher : "No publisher information was available for this book",
+          publishedDate: responsePretext.publishedDate ? responsePretext.publishedDate : "No published date was available for this book",
+          description: responsePretext.description ? responsePretext.description : "No description was available for this book",
           //   category: responsePretext.volumeInfo.categories[0],
         };
         setBookInfo(obj);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [props.history.location.search]);
 
   const handleClose = () => setShowModal(false);
 
@@ -53,7 +53,6 @@ const BookSearchResultContainer = (props) => {
   };
 
   const checkoutBookHandler = () => {
-    console.log("Ohh ohh look at me I checked out a book");
     const requestBody = {
       isbn: isbn,
       userId: "JimB",
