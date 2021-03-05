@@ -63,13 +63,17 @@ class Controller {
 
           final long isbn = parseIsbnFromString(ce.getIsbn());
 
-          final LocalDate earliestReturnedDate = loanRepository.findActiveLoansBy(isbn)
-              .stream()
-              .map(Loan::getDueDate)
-              .sorted(LocalDate::compareTo)
-              .findFirst().orElse(null);
+          if(ce.getAvailableCopies() == 0) {
+            final LocalDate earliestReturnedDate = loanRepository.findActiveLoansBy(isbn)
+                .stream()
+                .map(Loan::getDueDate)
+                .sorted(LocalDate::compareTo)
+                .findFirst().orElse(null);
 
-          return new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(isbn), earliestReturnedDate);
+            return new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(isbn), earliestReturnedDate);
+          } else {
+            return new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(isbn), null);
+          }
         })
         .collect(Collectors.toList());
   }
