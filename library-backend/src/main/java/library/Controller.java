@@ -52,6 +52,7 @@ class Controller {
   @GetMapping(path = "/api/watchlist")
   public List<CatalogueEntry> getWatchList(@RequestParam String userId) {
 
+
     return Lists.newArrayList();
   }
 
@@ -146,6 +147,8 @@ class Controller {
     earliestDueLoan.setReturned(true);
 
     loanRepository.save(earliestDueLoan);
+
+    // TODO: notify watchers!
 
     final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), earliestDueLoan);
     return response;
