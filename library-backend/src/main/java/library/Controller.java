@@ -63,12 +63,15 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/addToWatchlist")
   public boolean addBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
+    final long isbn = parseIsbnFromString(request.getIsbn());
 
-    if(watchersRepository.existsByIsbnAndUserId(request.getIsbn(), request.getUserId())) return false; // No need to watch again
+    if(!bookRepository.existsByIsbn(isbn)) return false; // Cannot watch a book that doesn't exist!
+
+    if(watchersRepository.existsByIsbnAndUserId(isbn, request.getUserId())) return false; // No need to watch again!
 
     final Watchers watchersToSave = new Watchers();
     watchersToSave.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
-    watchersToSave.setIsbn(request.getIsbn());
+    watchersToSave.setIsbn(isbn);
     watchersRepository.save(watchersToSave);
 
     return true;
@@ -218,6 +221,6 @@ class Controller {
 
   private long parseIsbnFromString(final String isbn) {
     final String isbnWithoutDashes = isbn.replace("-", "");
-    return Long.parseLong(isbn);
+    return Long.parseLong(isbnWithoutDashes);
   }
 }
