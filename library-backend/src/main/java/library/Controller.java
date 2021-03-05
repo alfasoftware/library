@@ -61,7 +61,7 @@ class Controller {
   }
 
   @CrossOrigin
-  @GetMapping(path = "/api/addToWatchlist")
+  @PostMapping(path = "/api/addToWatchlist")
   public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
 
     final Watchers watchersToSave = new Watchers();
