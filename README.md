@@ -44,11 +44,9 @@ The project is a work-in-progress and was initiated as part of the first remote 
 - Create new connection in SQLyog with libraray database
 - Next step is to create a new project from existing sources in IntelliJ with the library app code downloaded from GitHub. 
 - Update the appplication.properties file in IntelliJ to have spring.jpa.hibernate.ddl-auto=**create**
-- run the app 
-- stop and then re-start the app after updating that same line to spring.jpa.hibernate.ddl-auto=**update**
+- Run the app 
+- Stop and then re-start the app after updating that same line to spring.jpa.hibernate.ddl-auto=**update**
 - Add some ISBN's into your database via postman's api/addbookposting
-
-
 
 ### Front-end
 - The front-end is built using the JavaScript library [React](https://reactjs.org/)
