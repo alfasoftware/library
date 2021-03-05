@@ -27,12 +27,16 @@ class Controller {
 
   private final BookRepository bookRepository;
   private final LoanRepository loanRepository;
+  private final UserRepository userRepository;
+  private final WatchersRepository watchersRepository;
   private final VolumesCache volumesCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final VolumesCache volumesCache) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, WatchersRepository watchersRepository, final VolumesCache volumesCache) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
+    this.userRepository = userRepository;
+    this.watchersRepository = watchersRepository;
     this.volumesCache = volumesCache;
   }
 
@@ -49,15 +53,25 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")
   public List<CatalogueEntry> getWatchList(@RequestParam String userId) {
-
-    return Lists.newArrayList();
+    final List<String> watchlist = watchersRepository.findIsbnsByUserId(userId);
+    return getCatalogue()
+        .stream()
+        .filter(entry -> watchlist.contains(entry.getIsbn()))
+        .collect(Collectors.toList());
   }
 
   @CrossOrigin
-  @GetMapping(path = "/api/addToWatchlist")
-  public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
+  @PostMapping(path = "/api/addToWatchlist")
+  public boolean addBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
 
-    return false;
+    if(watchersRepository.existsByIsbnAndUserId(request.getIsbn(), request.getUserId())) return false; // No need to watch again
+
+    final Watchers watchersToSave = new Watchers();
+    watchersToSave.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
+    watchersToSave.setIsbn(request.getIsbn());
+    watchersRepository.save(watchersToSave);
+
+    return true;
   }
 
   @CrossOrigin
@@ -100,7 +114,7 @@ class Controller {
     loan.setBookOnLoan(firstAvailableBook);
     loan.setCheckoutDate(now);
     loan.setDueDate(now.plusMonths(1));
-    loan.setUser(request.getUserId());
+    loan.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
 
     loanRepository.save(loan);
 
@@ -113,7 +127,7 @@ class Controller {
   @GetMapping(path = "/api/allUserLoans")
   public List<LoanEntry> allUserLoans(@RequestParam String user) {
     return loanRepository
-        .findByUser(user)
+        .findByUserId(user)
         .stream()
         .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
         .collect(Collectors.toList());
@@ -124,7 +138,7 @@ class Controller {
   @GetMapping(path = "/api/allActiveUserLoans")
   public List<LoanEntry> allActiveUserLoans(@RequestParam String user) {
     return loanRepository
-        .findByUserAndReturnedFalse(user)
+        .findByUserIdAndReturnedFalse(user)
         .stream()
         .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
         .collect(Collectors.toList());
@@ -144,6 +158,8 @@ class Controller {
     earliestDueLoan.setReturned(true);
 
     loanRepository.save(earliestDueLoan);
+
+    // TODO: notify watchers!
 
     final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), earliestDueLoan);
     return response;
@@ -185,5 +201,14 @@ class Controller {
             || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
             || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
         );
+  }
+
+  private User fetchUserOrInsertIfNotExists(String id) {
+    return userRepository.findById(id).orElseGet(() -> {
+      User userToInsert = new User();
+      userToInsert.setId(id);
+      userRepository.save(userToInsert);
+      return userToInsert;
+    });
   }
 }
