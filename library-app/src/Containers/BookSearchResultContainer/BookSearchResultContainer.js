@@ -6,6 +6,7 @@ import { Modal, Button } from "react-bootstrap";
 import * as user from "../../user/user"
 import * as axiosEndPoints from "../../axios/axios"
 import BootstrapModal from "../../UI/Modal/BootstrapModal";
+import PageLoader from "../../Components/Loading/PageLoader";
 
 const BookSearchResultContainer = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -119,7 +120,7 @@ const BookSearchResultContainer = (props) => {
           addToWatchlistClicked={addBookToWatchListHandler}
         />
       ) : (
-        <p>I'm sorry, we couldn't load your book</p>
+        <PageLoader />
       )}
     </div>
   );

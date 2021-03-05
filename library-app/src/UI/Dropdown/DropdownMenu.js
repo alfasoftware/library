@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -20,7 +20,7 @@ export default function ControllableStates(props) {
         id="controllable-states-demo"
         options={props.options}
         style={{ width: 300, backgroundColor: "white", borderRadius: "5px", marginRight: "20px" }}
-        renderInput={(params) => <TextField {...params} label="Search"  placeholder="Search"/>}
+        renderInput={(params) => <TextField {...params} label="Search"  placeholder=""/>}
 
       />
     </div>

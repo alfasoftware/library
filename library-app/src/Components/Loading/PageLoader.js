@@ -23,7 +23,7 @@ const PageLoader = () => {
         color="#00BFFF"
         height={100}
         width={100}
-        style={{marginTop: 20}}
+        style={{marginTop: "20px"}}
    
       />
     </StyledLoadingContainer>);
