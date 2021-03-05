@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Lists;
 import library.api.CatalogueEntry;
 import library.api.CheckoutOrReturnRequest;
 import library.api.Items;
@@ -43,6 +44,13 @@ class Controller {
         .stream()
         .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getAvailableCopies(), b.getIsbn()))
         .collect(Collectors.toList());
+  }
+
+  @CrossOrigin
+  @GetMapping(path = "/api/watchlist")
+  public List<CatalogueEntry> getWatchList(String userId) {
+
+    return Lists.newArrayList();
   }
 
 
