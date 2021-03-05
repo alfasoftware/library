@@ -11,5 +11,5 @@ interface WatchersRepository extends CrudRepository<Watchers, Long> {
   @Query("select w.isbn from Watchers w where w.user.id = :userId")
   List<String> findIsbnsByUserId(@Param("userId") String userId);
 
-  boolean existsByIsbnAndUserId(String isbn, String userId);
+  boolean existsByIsbnAndUserId(long isbn, String userId);
 }
