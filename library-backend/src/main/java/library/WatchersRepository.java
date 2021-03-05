@@ -12,4 +12,6 @@ interface WatchersRepository extends CrudRepository<Watchers, Long> {
   List<String> findIsbnsByUserId(@Param("userId") String userId);
 
   boolean existsByIsbnAndUserId(long isbn, String userId);
+
+  void deleteByIsbnAndUserId(long isbn, String userId);
 }
