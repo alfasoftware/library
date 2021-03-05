@@ -43,7 +43,7 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/catalogue")
   public List<CatalogueEntry> getCatalogue() {
-    return bookRepository.getAllIsbnsToNumberOfCopies() //FIXME this method not behaving as we'd expect
+    return bookRepository.getAllIsbnsToNumberOfCopies()
         .stream()
         .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getCopies() - loanRepository.findActiveLoansBy(b.getIsbn()).stream().count(), b.getIsbn()))
         .collect(Collectors.toList());
