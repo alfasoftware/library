@@ -59,7 +59,7 @@ class Controller {
     return getCatalogue()
         .stream()
         .filter(entry -> watchlist.contains(parseIsbnFromString(entry.getIsbn())))
-        .map(ce -> new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(parseIsbnFromString(ce.getIsbn()))))
+        .map(ce -> new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(parseIsbnFromString(ce.getIsbn())), null))
         .collect(Collectors.toList());
   }
 
