@@ -45,7 +45,7 @@ class Controller {
   public List<CatalogueEntry> getCatalogue() {
     return bookRepository.getAllIsbnsToNumberOfCopies()
         .stream()
-        .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getCopies() - loanRepository.findActiveLoansBy(b.getIsbn()).stream().count(), b.getIsbn()))
+        .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getCopies() - loanRepository.findActiveLoansBy(b.getIsbn()).size(), b.getIsbn()))
         .collect(Collectors.toList());
   }
 
