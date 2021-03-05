@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
 import library.api.CatalogueEntry;
 import library.api.CheckoutOrReturnRequest;
 import library.api.Items;
@@ -44,11 +43,12 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/catalogue")
   public List<CatalogueEntry> getCatalogue() {
-    return bookRepository.getAllIsbnsToAvailableCopies()
+    return bookRepository.getAllIsbnsToNumberOfCopies()
         .stream()
-        .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getAvailableCopies(), b.getIsbn()))
+        .map(b -> new CatalogueEntry(volumesCache.getFor(b.getIsbn()), b.getCopies() - loanRepository.findActiveLoansBy(b.getIsbn()).size(), b.getIsbn()))
         .collect(Collectors.toList());
   }
+
 
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")

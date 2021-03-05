@@ -14,4 +14,7 @@ public interface LoanRepository extends CrudRepository<Loan, Integer> {
   List<Loan> findByUserId(String userId);
 
   List<Loan> findByUserIdAndReturnedFalse(String userId);
+
+  @Query("from Loan l inner join Book b on l.bookOnLoan = b where b.isbn=:isbn and l.returned = false order by l.dueDate")
+  List<Loan> findActiveLoansBy(@Param("isbn")String isbn);
 }
