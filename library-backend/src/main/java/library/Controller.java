@@ -55,11 +55,11 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")
   public List<WatchlistEntry> getWatchlist(@RequestParam String userId) {
-    final List<String> watchlist = watchersRepository.findIsbnsByUserId(userId);
+    final List<Long> watchlist = watchersRepository.findIsbnsByUserId(userId);
     return getCatalogue()
         .stream()
-        .filter(entry -> watchlist.contains(entry.getIsbn()))
-        .map(ce -> new WatchlistEntry(ce, 0))
+        .filter(entry -> watchlist.contains(parseIsbnFromString(entry.getIsbn())))
+        .map(ce -> new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(parseIsbnFromString(ce.getIsbn()))))
         .collect(Collectors.toList());
   }
 
