@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import library.api.CatalogueEntry;
-import library.api.CheckoutOrReturnRequest;
+import library.api.UserBookRequest;
 import library.api.Items;
 import library.api.LoanEntry;
 import library.api.SearchResult;
@@ -63,7 +63,7 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/addToWatchlist")
-  public boolean addBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
+  public boolean addBookToWatchList(@RequestBody UserBookRequest request) {
     final long isbn = parseIsbnFromString(request.getIsbn());
 
     if(!bookRepository.existsByIsbn(isbn)) return false; // Cannot watch a book that doesn't exist!
@@ -82,7 +82,7 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/removeFromWatchlist")
   @Transactional
-  public boolean removeBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
+  public boolean removeBookToWatchList(@RequestBody UserBookRequest request) {
     final long isbn = parseIsbnFromString(request.getIsbn());
 
     if(!bookRepository.existsByIsbn(isbn)) return false; // Cannot unwatch a book that doesn't exist!
@@ -123,7 +123,7 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/checkOutBook")
-  public LoanEntry checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
+  public LoanEntry checkOutBook(@RequestBody UserBookRequest request) {
     final long isbn = Long.parseLong(request.getIsbn());
 
     final List<Book> availableBooks = bookRepository.findAvailableBooksByIsbn(isbn);
@@ -169,7 +169,7 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/returnBook")
-  public LoanEntry returnBook(@RequestBody CheckoutOrReturnRequest request) {
+  public LoanEntry returnBook(@RequestBody UserBookRequest request) {
     final long isbn = Long.parseLong(request.getIsbn());
 
     List<Loan> activeLoans = loanRepository.findActiveLoansBy(isbn, request.getUserId());
