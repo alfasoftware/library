@@ -22,7 +22,7 @@ public class LoanEntry {
 
   public LoanEntry(Volumes volume, Loan loan) {
     this.volume = volume;
-    this.user = loan.getUser();
+    this.user = loan.getUser().getId();
     this.checkoutDate = loan.getCheckoutDate();
     this.dueDate = loan.getDueDate();
     this.returned = loan.isReturned();
