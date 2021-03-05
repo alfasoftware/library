@@ -1,14 +1,12 @@
 import React from "react";
-import Book from "../Components/Book/Book";
 import {useState, useEffect} from "react";
 import axios from "axios";
-
 import LibraryNavbar from "../Components/Navbar/LibraryNavbar";
 import CatalogueTableComponent from "../Components/CatalogueTableComponent/CatalogueTableComponent";
 
 const SearchResultsScreen = (props) => {
 
-const [searchedBookData, setSearchedBookData] = useState(null);
+const [searchedBookData, setSearchedBookData] = useState([]);
 
 let queryParams = props.history.location.search;
 
@@ -21,14 +19,13 @@ useEffect(() => {
 axios.get("http://localhost:8081/api/search?searchString=" + searchText)
       .then((response) => {
 
-        console.log(response)
-        console.log("logging more =" + response.data[0].items[0])
+        console.log(response);
 
         let arr = [];
         for (let i = 0; i < response.data.length; i++) {
           console.log("I am here")
-          if (response.data[i].items[0]) {
-          const responseData = response.data[i].items[0].volumeInfo;
+          if (response.data[i].volume.items[0]) {
+          const responseData = response.data[i].volume.items[0].volumeInfo;
   
           let imageUrl = null;
           if (responseData.imageLinks) {
@@ -43,7 +40,7 @@ axios.get("http://localhost:8081/api/search?searchString=" + searchText)
             numberOfCopies: response.data[i].availableCopies,
             //This is the 13 digit ISBN, for the 10 digit ISBN use industryIdentifier[0]
             isbn:
-              response.data[i].items[0].volumeInfo.industryIdentifiers[1]
+              response.data[i].volume.items[0].volumeInfo.industryIdentifiers[1]
                 .identifier,
           };
           arr.push(obj);
@@ -59,8 +56,10 @@ axios.get("http://localhost:8081/api/search?searchString=" + searchText)
 // Required props: bookData, redirectLink, clickRow 
 let resultsTable = null;
 
-if (searchedBookData) {
+if (searchedBookData[0]) {
   resultsTable =  <CatalogueTableComponent bookData={searchedBookData} clickRow={console.log("rowClicked")} redirectLink=""/>
+} else {
+  resultsTable = <div style={{display: "flex", justifyContent: "center", padding: "25px", height: "500px", width: "80%", margin: "auto", marginTop: "50px",}}><h2>I'm sorry, your search matched with no books in our library</h2></div>
 }
 
 

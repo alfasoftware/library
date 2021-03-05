@@ -18,7 +18,7 @@ export default function ControllableStates(props) {
             props.inputChanged(newInputValue);
           }}
         id="controllable-states-demo"
-        options={options}
+        options={props.options}
         style={{ width: 300, backgroundColor: "white", borderRadius: "5px", marginRight: "20px" }}
         renderInput={(params) => <TextField {...params} label="Search"  placeholder="Search"/>}
 
