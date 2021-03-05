@@ -48,11 +48,17 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")
-  public List<CatalogueEntry> getWatchList(String userId) {
+  public List<CatalogueEntry> getWatchList(@RequestParam String userId) {
 
     return Lists.newArrayList();
   }
 
+  @CrossOrigin
+  @GetMapping(path = "/api/addToWatchlist")
+  public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
+
+    return false;
+  }
 
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
