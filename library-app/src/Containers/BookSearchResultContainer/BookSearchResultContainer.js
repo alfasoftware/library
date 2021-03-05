@@ -62,7 +62,13 @@ const BookSearchResultContainer = (props) => {
   };
 
   const addBookToWatchListHandler = () => {
-    axios.post(axiosEndPoints.ADD_BOOK_TO_WATCHLIST + "?userId=" + user.USERID + "&isbn=" + "isbn").then((response) => {
+
+    const requestBody = {
+      isbn: isbn,
+      userId: user.USERID,
+    };
+
+    axios.post(axiosEndPoints.ADD_BOOK_TO_WATCHLIST, requestBody).then((response) => {
       setShowModal(response);
       setModalInfo({
         title: "Book successfully added to watch list!",

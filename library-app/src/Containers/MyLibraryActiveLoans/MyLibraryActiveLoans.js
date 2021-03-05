@@ -4,6 +4,7 @@ import mockedData from "./mockedLibrarydata.json";
 import GreenTick from "../../UI/Icons/GreenTick";
 import RedCross from "../../UI/Icons/RedCross";
 import axios from "axios";
+import * as users from "../../user/user"
 
 const MyLibraryActiveLoans = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -21,7 +22,7 @@ const MyLibraryActiveLoans = (props) => {
 
     const requestBody = {
       isbn: dataEntry.isbn,
-      userId: "JimB",
+      userId: users.USERID,
     };
     axios
       .post("http://localhost:8081/api/returnBook", requestBody)
@@ -95,7 +96,7 @@ const MyLibraryActiveLoans = (props) => {
               </Modal.Footer>
             </Modal>
             <tr>
-              <td>{dataEntry.title}</td>
+              <td className="text-center">{dataEntry.title}</td>
               <td className="text-center">{dataEntry.checkoutDate}</td>
               <td className="text-center">{dataEntry.dueDate}</td>
               <td
@@ -121,7 +122,7 @@ const MyLibraryActiveLoans = (props) => {
             </tr>
           </tbody>
         );
-      }
+      } 
     });
   }
 
@@ -135,7 +136,7 @@ const MyLibraryActiveLoans = (props) => {
       >
         <thead>
           <tr>
-            <th>Book title</th>
+            <th className="text-center">Book title</th>
             <th className="text-center">Check out date</th>
             <th className="text-center">Due date</th>
             <th className="text-center">Requested by another user?</th>

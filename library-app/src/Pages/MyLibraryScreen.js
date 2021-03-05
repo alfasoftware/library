@@ -4,6 +4,7 @@ import Background from "../assets/blurredLibraryWhite.jpg";
 import ScreenHeaderImage from "../Components/ScreenHeaderImage/ScreenHeaderImage";
 import MyLibraryActiveLoans from "../Containers/MyLibraryActiveLoans/MyLibraryActiveLoans";
 import { Container, Col, Row } from "react-bootstrap";
+import MyLibraryWatchlist from "../Containers/MyLibraryWatchlist"
 
 const MyLibraryScreen = () => {
   return (
@@ -25,7 +26,9 @@ const MyLibraryScreen = () => {
         </Row>
       </Container>
       <a style={{ marginLeft: ".5rem" }}></a>
-      <MyLibraryActiveLoans />
+      <MyLibraryActiveLoans /> 
+      {/* We need to update this to pass in the userId which will be provided by Okta */}
+      <MyLibraryWatchlist />
     </div>
   );
 };
