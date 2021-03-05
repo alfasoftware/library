@@ -14,5 +14,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
   List<Book> findAvailableBooksByIsbn(String isbn);
 
   @Query("select new library.IsbnToCopies(b.isbn, count(b.isbn)) from Book b")
-  List<IsbnToCopies> getAllIsbnsToNumberOfCopies();
+  List<IsbnToCopies> getAllIsbnsToNumberOfCopies(); //FIXME
 }
