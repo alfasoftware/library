@@ -3,6 +3,7 @@ package library.api;
 import java.time.LocalDate;
 
 import library.Loan;
+import library.User;
 
 
 /**
@@ -22,7 +23,7 @@ public class LoanEntry {
 
   public LoanEntry(Volumes volume, Loan loan) {
     this.volume = volume;
-    this.user = loan.getUser();
+    this.user = loan.getUser().getUserSignon();
     this.checkoutDate = loan.getCheckoutDate();
     this.dueDate = loan.getDueDate();
     this.returned = loan.isReturned();

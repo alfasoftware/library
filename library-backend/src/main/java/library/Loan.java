@@ -21,7 +21,9 @@ public class Loan {
   @JoinColumn(name = "bookId", referencedColumnName = "id")
   private Book bookOnLoan;
 
-  private String user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "userId", referencedColumnName = "id")
+  private User user;
 
   private LocalDate checkoutDate;
 
@@ -45,11 +47,11 @@ public class Loan {
     this.bookOnLoan = bookOnLoan;
   }
 
-  public String getUser() {
+  public User getUser() {
     return user;
   }
 
-  void setUser(String user) {
+  void setUser(User user) {
     this.user = user;
   }
 
