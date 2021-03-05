@@ -64,7 +64,12 @@ class Controller {
   @GetMapping(path = "/api/addToWatchlist")
   public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
 
-    return false;
+    Watchers watchersToSave = new Watchers();
+    watchersToSave.setUser(fetchUserOrInsertIfNotExists(userId));
+    watchersToSave.setIsbn(isbn);
+    watchersRepository.save(watchersToSave);
+
+    return true;
   }
 
   @CrossOrigin
