@@ -115,7 +115,7 @@ class Controller {
   @GetMapping(path = "/api/allUserLoans")
   public List<LoanEntry> allUserLoans(@RequestParam String user) {
     return loanRepository
-        .findByUser(user)
+        .findByUserId(user)
         .stream()
         .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
         .collect(Collectors.toList());
@@ -126,7 +126,7 @@ class Controller {
   @GetMapping(path = "/api/allActiveUserLoans")
   public List<LoanEntry> allActiveUserLoans(@RequestParam String user) {
     return loanRepository
-        .findByUserAndReturnedFalse(user)
+        .findByUserIdAndReturnedFalse(user)
         .stream()
         .map(l -> new LoanEntry(volumesCache.getFor(l.getBookOnLoan().getIsbn()), l))
         .collect(Collectors.toList());
