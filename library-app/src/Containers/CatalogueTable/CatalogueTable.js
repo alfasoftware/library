@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router";
 import CatalogueTableComponent  from "../../Components/CatalogueTableComponent/CatalogueTableComponent"
+import PageLoader from "../../Components/Loading/PageLoader";
 
 class CatalogueTable extends Component {
   state = { bookData: null };
@@ -41,7 +42,7 @@ class CatalogueTable extends Component {
         { this.state.bookData ? (
           <CatalogueTableComponent bookData={this.state.bookData}  />
         ) : (
-          <p>No books were found in the database</p>
+          <PageLoader />  
         )}
       </div>
     );
