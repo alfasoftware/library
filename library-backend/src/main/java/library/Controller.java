@@ -59,7 +59,22 @@ class Controller {
     return getCatalogue()
         .stream()
         .filter(entry -> watchlist.contains(parseIsbnFromString(entry.getIsbn())))
-        .map(ce -> new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(parseIsbnFromString(ce.getIsbn()))))
+        .map(ce -> {
+
+          final long isbn = parseIsbnFromString(ce.getIsbn());
+
+          if(ce.getAvailableCopies() == 0) {
+            final LocalDate earliestReturnedDate = loanRepository.findActiveLoansBy(isbn)
+                .stream()
+                .map(Loan::getDueDate)
+                .sorted(LocalDate::compareTo)
+                .findFirst().orElse(null);
+
+            return new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(isbn), earliestReturnedDate);
+          } else {
+            return new WatchlistEntry(ce, watchersRepository.countNumberOfWatchersFor(isbn), null);
+          }
+        })
         .collect(Collectors.toList());
   }
 
