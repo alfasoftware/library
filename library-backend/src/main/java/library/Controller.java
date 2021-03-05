@@ -62,11 +62,11 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/addToWatchlist")
-  public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
+  public boolean addBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
 
     final Watchers watchersToSave = new Watchers();
-    watchersToSave.setUser(fetchUserOrInsertIfNotExists(userId));
-    watchersToSave.setIsbn(isbn);
+    watchersToSave.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
+    watchersToSave.setIsbn(request.getIsbn());
     watchersRepository.save(watchersToSave);
 
     return true;
