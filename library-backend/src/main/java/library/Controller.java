@@ -77,6 +77,21 @@ class Controller {
     return true;
   }
 
+
+  @CrossOrigin
+  @PostMapping(path = "/api/removeFromWatchlist")
+  public boolean removeBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
+    final long isbn = parseIsbnFromString(request.getIsbn());
+
+    if(!bookRepository.existsByIsbn(isbn)) return false; // Cannot unwatch a book that doesn't exist!
+
+    if(!watchersRepository.existsByIsbnAndUserId(isbn, request.getUserId())) return false; // No need to unwatch if we're not watching already!
+
+    watchersRepository.deleteByIsbnAndUserId(isbn, request.getUserId());
+
+    return true;
+  }
+
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody String isbn) {
