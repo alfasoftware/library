@@ -64,6 +64,8 @@ class Controller {
   @PostMapping(path = "/api/addToWatchlist")
   public boolean addBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
 
+    if(watchersRepository.existsByIsbnAndUserId(request.getIsbn(), request.getUserId())) return false; // No need to watch again
+
     final Watchers watchersToSave = new Watchers();
     watchersToSave.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
     watchersToSave.setIsbn(request.getIsbn());
