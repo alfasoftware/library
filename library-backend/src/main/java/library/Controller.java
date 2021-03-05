@@ -28,13 +28,15 @@ class Controller {
   private final BookRepository bookRepository;
   private final LoanRepository loanRepository;
   private final UserRepository userRepository;
+  private final WatchersRepository watchersRepository;
   private final VolumesCache volumesCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, final VolumesCache volumesCache) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, WatchersRepository watchersRepository, final VolumesCache volumesCache) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
     this.userRepository = userRepository;
+    this.watchersRepository = watchersRepository;
     this.volumesCache = volumesCache;
   }
 
@@ -51,9 +53,11 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")
   public List<CatalogueEntry> getWatchList(@RequestParam String userId) {
-
-
-    return Lists.newArrayList();
+    final List<String> watchlist = watchersRepository.findIsbnsByUserId(userId);
+    return getCatalogue()
+        .stream()
+        .filter(entry -> watchlist.contains(entry.getIsbn()))
+        .collect(Collectors.toList());
   }
 
   @CrossOrigin
