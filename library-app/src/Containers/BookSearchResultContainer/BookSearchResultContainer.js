@@ -5,12 +5,14 @@ import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import * as user from "../../user/user"
 import * as axiosEndPoints from "../../axios/axios"
+import BootstrapModal from "../../UI/Modal/BootstrapModal";
 
 const BookSearchResultContainer = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [isbn, setisbn] = useState(null);
   const [bookInfo, setBookInfo] = useState(null);
   const [checkoutBookResponse, setCheckoutBookResponse] = useState(null);
+  const [modalInfo, setModalInfo] = useState(null);
 
   useEffect(function updateIsbn() {
     let isbn = props.history.location.search;
@@ -41,7 +43,11 @@ const BookSearchResultContainer = (props) => {
       .catch((err) => console.log(err));
   }, [props.history.location.search]);
 
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false)
+  setModalInfo(null);
+  }
+  ;
 
   const handleGoHome = () => {
     handleClose();
@@ -57,6 +63,13 @@ const BookSearchResultContainer = (props) => {
   const addBookToWatchListHandler = () => {
     axios.post(axiosEndPoints.ADD_BOOK_TO_WATCHLIST + "?userId=" + user.USERID + "&isbn=" + "isbn").then((response) => {
       setShowModal(response);
+      setModalInfo({
+        title: "Book successfully added to watch list!",
+        body: `Thank you adding ${bookInfo ? bookInfo.title : null} to your watchlist. You will be notified when the status of this book changes`,
+        button1Text: "Home",
+        button2Text: "Back to book info"
+      })
+
     }).catch((err) => console.log(err))
   }
 
@@ -70,7 +83,17 @@ const BookSearchResultContainer = (props) => {
       .then((response) => {
         setCheckoutBookResponse(response.data);
 
+        console.log(response.data)
         setShowModal(true);
+
+        setModalInfo({
+          title: "Book checked out successfully!",
+          body: `Thank you for checking out ${bookInfo ? bookInfo.title : null}. This
+          book is due to be returned on 
+          ${response.data.dueDate}`,
+          button1Text: "Home",
+          button2Text: "Request another book"
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -79,24 +102,10 @@ const BookSearchResultContainer = (props) => {
 
   return (
     <div>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Book checked out successfully!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Thank you for checking out {bookInfo ? bookInfo.title : null}. This
-          book is due to be returned on{" "}
-          {checkoutBookResponse ? checkoutBookResponse.dueDate : null}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={handleGoHome}>
-            Home
-          </Button>
-          <Button variant="primary" onClick={handleSubmitAnotherBook}>
-            Request another book
-          </Button>
-        </Modal.Footer>
-      </Modal>
+     {showModal && <BootstrapModal show={showModal} handleClose={handleClose} 
+      titleText={modalInfo?.title} bodyText={modalInfo?.body} 
+      button1Clicked={handleGoHome} button1Text={modalInfo?.button1Text} 
+      button2Clicked={handleSubmitAnotherBook} button2Text={modalInfo?.button2Text}/>}
       {bookInfo ? (
         <Book
           title={bookInfo.title}
