@@ -11,9 +11,8 @@ import { Table, Modal, Button } from "react-bootstrap";
  */
 const MyLibraryWatchlist = ({userId}) => {
 
-
-
     const [watchedBooksData, setWatchedBooksData] = useState([]);
+    const [bookUnwatchedRender, setBookUnwatchedRender] = useState(false); // A hacky workaround to refresh the page when a book is unwatched -- the value of this boolean is not used
 
 useEffect(() => {
 
@@ -21,7 +20,7 @@ async function getWatchedBookData() {
     await axios.get(axiosEndPoints.GET_WATCHED_BOOK_LIST + "?userId=" + user.USERID)
       .then((response) => {
           console.log(response.data);
-          setWatchedBooksData(response.data.map((book) => ({isbn: book.isbn, availableCopies: book.availableCopies, volumeInfo: book.volume.items[0].volumeInfo})))
+          setWatchedBooksData(response.data.map((book) => ({isbn: book.isbn, availableCopies: book.availableCopies, numberOfWatchers: book.numberOfWatchers, volumeInfo: book.volume.items[0].volumeInfo})))
 })
 }
 
@@ -29,7 +28,19 @@ async function getWatchedBookData() {
     getWatchedBookData();
 // }
 
-}, [userId])
+}, [userId, bookUnwatchedRender])
+
+
+const unwatchBookHandler = (isbn) => {
+    const requestBody = {
+        userId: user.USERID,
+        isbn: isbn
+    }
+axios.post(axiosEndPoints.REMOVE_FROM_WATCHEDLIST, requestBody).then(() => {
+    setBookUnwatchedRender((curVal) => !curVal);
+
+})
+}
 
 let tableRows = null;
 
@@ -51,15 +62,14 @@ let tableRows = null;
                   borderBottom: "transparent",
                 }}
               >
-                {/* {dataEntry.volumeInfo.requestedByOtherUser ? <GreenTick /> : <RedCross />}
-                 */}
-                 number of watchers
+              
+                 {dataEntry.numberOfWatchers}
               </td>
               <td className="text-center">
                 <Button
                   variant="primary"
                   type="submit"
-                //   onClick={formSubmittedHandler}
+                  onClick={() =>unwatchBookHandler(dataEntry.isbn)}
                 >
                   Unwatch
                 </Button>

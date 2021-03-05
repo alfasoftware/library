@@ -13,8 +13,6 @@ let queryParams = props.history.location.search;
 console.log(queryParams);
 const searchText = queryParams.substring(queryParams.lastIndexOf("=") + 1);
 
-console.log("testing Concat= " + searchText);
-
 useEffect(() => {
 axios.get("http://localhost:8081/api/search?searchString=" + searchText)
       .then((response) => {
@@ -23,7 +21,6 @@ axios.get("http://localhost:8081/api/search?searchString=" + searchText)
 
         let arr = [];
         for (let i = 0; i < response.data.length; i++) {
-          console.log("I am here")
           if (response.data[i].volume.items[0]) {
           const responseData = response.data[i].volume.items[0].volumeInfo;
   

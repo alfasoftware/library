@@ -69,7 +69,7 @@ const MyLibraryActiveLoans = (props) => {
 
   if (activeLoanInfo[0]) {
     tableRows = activeLoanInfo.map((dataEntry) => {
-      console.log("line 49 " + dataEntry);
+      console.log(dataEntry);
       if (dataEntry.display) {
         return (
           <tbody key={dataEntry.id}>
@@ -95,7 +95,7 @@ const MyLibraryActiveLoans = (props) => {
                 </div>
               </Modal.Footer>
             </Modal>
-            <tr>
+            <tr >
               <td className="text-center">{dataEntry.title}</td>
               <td className="text-center">{dataEntry.checkoutDate}</td>
               <td className="text-center">{dataEntry.dueDate}</td>
