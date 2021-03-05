@@ -64,7 +64,7 @@ class Controller {
   @GetMapping(path = "/api/addToWatchlist")
   public boolean addBookToWatchList(@RequestParam String userId, @RequestParam String isbn) {
 
-    Watchers watchersToSave = new Watchers();
+    final Watchers watchersToSave = new Watchers();
     watchersToSave.setUser(fetchUserOrInsertIfNotExists(userId));
     watchersToSave.setIsbn(isbn);
     watchersRepository.save(watchersToSave);
