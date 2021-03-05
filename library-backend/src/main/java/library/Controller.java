@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,6 +81,7 @@ class Controller {
 
   @CrossOrigin
   @PostMapping(path = "/api/removeFromWatchlist")
+  @Transactional
   public boolean removeBookToWatchList(@RequestBody CheckoutOrReturnRequest request) {
     final long isbn = parseIsbnFromString(request.getIsbn());
 
