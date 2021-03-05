@@ -22,9 +22,6 @@ class Book {
 
   private String isbn;
 
-  @OneToMany(mappedBy = "bookOnLoan", cascade = CascadeType.ALL)
-  private List<Loan> loans = Lists.newArrayList();
-
   public Long getId() {
     return id;
   }
@@ -35,9 +32,5 @@ class Book {
 
   void setIsbn(final String isbn) {
     this.isbn = isbn;
-  }
-
-  public List<Loan> getLoans() {
-    return loans;
   }
 }
