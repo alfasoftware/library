@@ -77,17 +77,17 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/addBook")
   public Volumes addNewBook(@RequestBody String isbn) {
-    isbn = isbn.replace("-", "");
+    final long isbnAsLong = parseIsbnFromString(isbn);
 
     // Cache detailed volume information and return.
-    Volumes volumes = volumesCache.getFor(isbn);
+    Volumes volumes = volumesCache.getFor(isbnAsLong);
     if (volumes.getItems().isEmpty()) {
       throw new IllegalArgumentException("No volumes were found for the IBSN: " + isbn);
     }
 
     // Save isbn to our database of books
     final Book bookToSave = new Book();
-    bookToSave.setIsbn(isbn);
+    bookToSave.setIsbn(isbnAsLong);
     bookRepository.save(bookToSave);
 
     return volumes;
@@ -97,14 +97,16 @@ class Controller {
   @CrossOrigin
   @GetMapping(path = "/api/volumeDetails")
   public Volumes getVolumeDetails(@RequestParam String isbn) {
-    return volumesCache.getFor(isbn);
+    return volumesCache.getFor(parseIsbnFromString(isbn));
   }
 
 
   @CrossOrigin
   @PostMapping(path = "/api/checkOutBook")
   public LoanEntry checkOutBook(@RequestBody CheckoutOrReturnRequest request) {
-    final List<Book> availableBooks = bookRepository.findAvailableBooksByIsbn(request.getIsbn());
+    final long isbn = Long.parseLong(request.getIsbn());
+
+    final List<Book> availableBooks = bookRepository.findAvailableBooksByIsbn(isbn);
     if (availableBooks.isEmpty()) throw new RuntimeException("No available copies of " + request.getIsbn());
 
     final Book firstAvailableBook = availableBooks.get(0);
@@ -118,7 +120,7 @@ class Controller {
 
     loanRepository.save(loan);
 
-    final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), loan);
+    final LoanEntry response = new LoanEntry(volumesCache.getFor(isbn), loan);
     return response;
   }
 
@@ -148,7 +150,9 @@ class Controller {
   @CrossOrigin
   @PostMapping(path = "/api/returnBook")
   public LoanEntry returnBook(@RequestBody CheckoutOrReturnRequest request) {
-    List<Loan> activeLoans = loanRepository.findActiveLoansBy(request.getIsbn(), request.getUserId());
+    final long isbn = Long.parseLong(request.getIsbn());
+
+    List<Loan> activeLoans = loanRepository.findActiveLoansBy(isbn, request.getUserId());
 
     System.out.println("getUserId: " + request.getUserId());
     if (activeLoans.isEmpty())
@@ -161,7 +165,7 @@ class Controller {
 
     // TODO: notify watchers!
 
-    final LoanEntry response = new LoanEntry(volumesCache.getFor(request.getIsbn()), earliestDueLoan);
+    final LoanEntry response = new LoanEntry(volumesCache.getFor(isbn), earliestDueLoan);
     return response;
   }
 
@@ -210,5 +214,10 @@ class Controller {
       userRepository.save(userToInsert);
       return userToInsert;
     });
+  }
+
+  private long parseIsbnFromString(final String isbn) {
+    final String isbnWithoutDashes = isbn.replace("-", "");
+    return Long.parseLong(isbn);
   }
 }

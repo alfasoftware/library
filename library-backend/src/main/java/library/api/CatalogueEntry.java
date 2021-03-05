@@ -6,10 +6,10 @@ public class CatalogueEntry {
   private final long availableCopies;
   private final String isbn;
 
-  public CatalogueEntry(final Volumes volume, final long availableCopies, String isbn) {
+  public CatalogueEntry(final Volumes volume, final long availableCopies, long isbn) {
     this.volume = volume;
     this.availableCopies = availableCopies;
-    this.isbn = isbn;
+    this.isbn = String.valueOf(isbn);
   }
 
   public Volumes getVolume() {

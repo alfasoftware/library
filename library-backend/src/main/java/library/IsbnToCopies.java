@@ -2,15 +2,15 @@ package library;
 
 public class IsbnToCopies {
 
-  private final String isbn;
+  private final long isbn;
   private final long copies;
 
-  public IsbnToCopies(final String isbn, final long copies) {
+  public IsbnToCopies(final Long isbn, final long copies) {
     this.isbn = isbn;
     this.copies = copies;
   }
 
-  String getIsbn() {
+  long getIsbn() {
     return isbn;
   }
 
