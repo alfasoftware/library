@@ -21,6 +21,7 @@ import library.api.LoanEntry;
 import library.api.SearchResult;
 import library.api.VolumeInfo;
 import library.api.Volumes;
+import library.api.WatchlistEntry;
 
 @RestController
 class Controller {
@@ -53,11 +54,12 @@ class Controller {
 
   @CrossOrigin
   @GetMapping(path = "/api/watchlist")
-  public List<CatalogueEntry> getWatchList(@RequestParam String userId) {
+  public List<WatchlistEntry> getWatchlist(@RequestParam String userId) {
     final List<String> watchlist = watchersRepository.findIsbnsByUserId(userId);
     return getCatalogue()
         .stream()
         .filter(entry -> watchlist.contains(entry.getIsbn()))
+        .map(ce -> new WatchlistEntry(ce))
         .collect(Collectors.toList());
   }
 
