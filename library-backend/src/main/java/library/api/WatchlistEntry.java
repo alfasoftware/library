@@ -6,9 +6,11 @@ package library.api;
 public class WatchlistEntry {
 
   private final CatalogueEntry catalogueEntry;
+  private final long numberOfWatchers;
 
-  public WatchlistEntry(CatalogueEntry catalogueEntry) {
+  public WatchlistEntry(CatalogueEntry catalogueEntry, long numberOfWatchers) {
     this.catalogueEntry = catalogueEntry;
+    this.numberOfWatchers = numberOfWatchers;
   }
 
 
@@ -22,5 +24,9 @@ public class WatchlistEntry {
 
   public String getIsbn() {
     return catalogueEntry.getIsbn();
+  }
+
+  public long getNumberOfWatchers() {
+    return numberOfWatchers;
   }
 }
