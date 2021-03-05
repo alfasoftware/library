@@ -1,0 +1,1 @@
+export const ADD_BOOK_TO_WATCHLIST = "http://localhost:8081/api/addToWatchlist"
