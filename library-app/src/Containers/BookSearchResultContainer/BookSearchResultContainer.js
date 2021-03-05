@@ -3,6 +3,8 @@ import { withRouter } from "react-router";
 import Book from "../../Components/Book/Book";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
+import * as user from "../../user/user"
+import * as axiosEndPoints from "../../axios/axios"
 
 const BookSearchResultContainer = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -52,10 +54,16 @@ const BookSearchResultContainer = (props) => {
     //Haven't quite got this working yet
   };
 
+  const addBookToWatchListHandler = () => {
+    axios.post(axiosEndPoints.ADD_BOOK_TO_WATCHLIST + "?userId=" + user.USERID + "&isbn=" + "isbn").then((response) => {
+      setShowModal(response);
+    }).catch((err) => console.log(err))
+  }
+
   const checkoutBookHandler = () => {
     const requestBody = {
       isbn: isbn,
-      userId: "JimB",
+      userId: user.USERID,
     };
     axios
       .post("http://localhost:8081/api/checkOutBook", requestBody)
@@ -99,6 +107,7 @@ const BookSearchResultContainer = (props) => {
           publisher={bookInfo.publisher}
           publishedDate={bookInfo.publishedDate}
           checkOutBook={checkoutBookHandler}
+          addToWatchlistClicked={addBookToWatchListHandler}
         />
       ) : (
         <p>I'm sorry, we couldn't load your book</p>

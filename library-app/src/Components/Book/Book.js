@@ -57,7 +57,7 @@ const Book = (props) => {
               <Button onClick={props.checkOutBook}>Check out book</Button>
             </Col>
             <Col>
-              <Button>Add to watch list</Button>
+              <Button onClick={props.addToWatchlistClicked}>Add to watch list</Button>
             </Col>
             <Col>
               <Button>Recommend to a friend</Button>
