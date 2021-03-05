@@ -27,12 +27,14 @@ class Controller {
 
   private final BookRepository bookRepository;
   private final LoanRepository loanRepository;
+  private final UserRepository userRepository;
   private final VolumesCache volumesCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, final VolumesCache volumesCache) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, final VolumesCache volumesCache) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
+    this.userRepository = userRepository;
     this.volumesCache = volumesCache;
   }
 
@@ -100,7 +102,7 @@ class Controller {
     loan.setBookOnLoan(firstAvailableBook);
     loan.setCheckoutDate(now);
     loan.setDueDate(now.plusMonths(1));
-    loan.setUser(request.getUserId());
+    loan.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
 
     loanRepository.save(loan);
 
@@ -185,5 +187,14 @@ class Controller {
             || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
             || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
         );
+  }
+
+  private User fetchUserOrInsertIfNotExists(String id) {
+    return userRepository.findById(id).orElseGet(() -> {
+      User userToInsert = new User();
+      userToInsert.setId(id);
+      userRepository.save(userToInsert);
+      return userToInsert;
+    });
   }
 }

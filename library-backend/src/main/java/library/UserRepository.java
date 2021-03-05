@@ -1,7 +1,7 @@
 package library;
 
-public interface UserRepository {
+import org.springframework.data.repository.CrudRepository;
 
-  find
+public interface UserRepository extends CrudRepository<User, String> {
 
 }
