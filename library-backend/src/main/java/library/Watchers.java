@@ -17,7 +17,7 @@ class Watchers {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String isbn;
+  private long isbn;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "userId", referencedColumnName = "id")
@@ -35,11 +35,11 @@ class Watchers {
     this.user = user;
   }
 
-  public String getIsbn() {
+  public long getIsbn() {
     return isbn;
   }
 
-  public void setIsbn(String isbn) {
+  public void setIsbn(long isbn) {
     this.isbn = isbn;
   }
 }

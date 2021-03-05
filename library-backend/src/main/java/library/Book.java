@@ -20,17 +20,17 @@ class Book {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String isbn;
+  private Long isbn;
 
   public Long getId() {
     return id;
   }
 
-  public String getIsbn() {
+  public Long getIsbn() {
     return isbn;
   }
 
-  void setIsbn(final String isbn) {
+  void setIsbn(final Long isbn) {
     this.isbn = isbn;
   }
 }

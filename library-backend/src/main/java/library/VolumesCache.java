@@ -29,7 +29,7 @@ class VolumesCache {
 
   private final RestTemplate restTemplate;
 
-  private final ConcurrentMap<String, Volumes> isbnToVolumeCache = Maps.newConcurrentMap();
+  private final ConcurrentMap<Long, Volumes> isbnToVolumeCache = Maps.newConcurrentMap();
 
   @Autowired
   VolumesCache(final BookRepository bookRepository, final RestTemplateBuilder restTemplateBuilder) {
@@ -42,13 +42,13 @@ class VolumesCache {
   }
 
 
-  Volumes getFor(String isbn) {
+  Volumes getFor(Long isbn) {
     return Optional.ofNullable(isbnToVolumeCache.get(isbn))
       .orElseGet(() -> getVolumesAndAddToCache(isbn));
   }
 
 
-  private Volumes getVolumesAndAddToCache(final String isbn) {
+  private Volumes getVolumesAndAddToCache(final Long isbn) {
 
     final Volumes volumeToCache = restTemplate.getForObject("https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn, Volumes.class);
 
