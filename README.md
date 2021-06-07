@@ -32,9 +32,31 @@ The project is a work-in-progress and was initiated as part of the first remote 
 - The back-end is a REST API built using [Spring Boot](https://spring.io/guides/gs/spring-boot/).
 - It has several end-points that the front-end calls upon to retrieve data. 
 
+### Back-end setup 
+- Ensure you have a [GitHub account](https://github.com/) & GitHub Deskdop App downloaded.
+- Make sure your GitHub account is added to alfasoftware on GitHub.
+- Go to [GitHub/alfasoftware](https://github.com/alfasoftware) you should be able to accept the invitation if this is a new account.
+- Make sure your account has been added to the library-maintainers group.
+- Download the library app code from GitHub.
+- Ensure you have a [Postman account](https://www.postman.com/downloads/) & Postman Desktop App downloaded. 
+- You then have to be added to the necessary Team workspace by someone already on the team.
+- Make sure you have SQLyog
+- Create new connection in SQLyog with libraray database
+- Next step is to create a new project from existing sources in IntelliJ with the library app code downloaded from GitHub. 
+- Update the appplication.properties file in IntelliJ to have spring.jpa.hibernate.ddl-auto=**create**
+- Run the app 
+- Stop and then re-start the app after updating that same line to spring.jpa.hibernate.ddl-auto=**update**
+- Add some ISBN's into your database via postman's api/addbookposting
+
 ### Front-end
 - The front-end is built using the JavaScript library [React](https://reactjs.org/)
-- It uses [axios](https://npmjs.com/package/axios) to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.    
+- It uses [axios](https://npmjs.com/package/axios) to make `GET` requests to display information in UI and `POST` requests to send data to the back-end to persist in the database.
+
+### Front-end setup 
+- Downlaod  [NodeJS, npm](https://www.npmjs.com/get-npm)
+- Go to powershell and cd into the library-app downloaded from github
+- Run npm install 
+- Run npm start
 
 ## To use the app
 - First, clone this repo.
