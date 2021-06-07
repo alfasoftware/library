@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import library.api.CatalogueEntry;
-import library.api.UserBookRequest;
 import library.api.Items;
 import library.api.LoanEntry;
+import library.api.NewBookRequestedByUser;
 import library.api.SearchResult;
+import library.api.UserBookRequest;
 import library.api.VolumeInfo;
 import library.api.Volumes;
 import library.api.WatchlistEntry;
@@ -30,14 +31,16 @@ class Controller {
   private final LoanRepository loanRepository;
   private final UserRepository userRepository;
   private final WatchersRepository watchersRepository;
+  private final NewBookRequestRepository newBookRequestRepository;
   private final VolumesCache volumesCache;
 
   @Autowired
-  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, WatchersRepository watchersRepository, final VolumesCache volumesCache) {
+  Controller(BookRepository bookRepository, final LoanRepository loanRepository, UserRepository userRepository, WatchersRepository watchersRepository, final VolumesCache volumesCache, final  NewBookRequestRepository newBookRequestRepository) {
     this.bookRepository = bookRepository;
     this.loanRepository = loanRepository;
     this.userRepository = userRepository;
     this.watchersRepository = watchersRepository;
+    this.newBookRequestRepository = newBookRequestRepository;
     this.volumesCache = volumesCache;
   }
 
@@ -228,6 +231,40 @@ class Controller {
   }
 
 
+  @CrossOrigin
+  @GetMapping(path = "/api/getBookRequestsForUser")
+  public List<NewBookRequestedByUser> getBookRequest(@RequestBody String userId) {
+    final List<NewBookRequest> newBookRequestList = newBookRequestRepository.findNewBookRequestsByUserId(userId);
+
+    return newBookRequestList.stream().map(this::mapNewBookToApiObject).collect(Collectors.toList());
+
+
+  }
+
+  private NewBookRequestedByUser mapNewBookToApiObject(NewBookRequest newBookRequest) {
+    return new NewBookRequestedByUser(newBookRequest.getUser().getId(), newBookRequest.getTitle(), newBookRequest.getAuthor(), newBookRequest.getAdditionalInformation());
+  }
+
+
+  @CrossOrigin
+  @PostMapping(path = "/api/addNewBookRequest")
+  public boolean addNewBookRequest(@RequestBody NewBookRequestedByUser request) {
+
+    final NewBookRequest newBookRequest = new NewBookRequest();
+    newBookRequest.setUser(fetchUserOrInsertIfNotExists(request.getUserId()));
+    newBookRequest.setActiveRequest(false);
+    newBookRequest.setTitle(request.getTitle());
+    newBookRequest.setAuthor(request.getAuthor());
+    newBookRequest.setAdditionalInformation(request.getAdditionalInformation());
+    newBookRequest.setDate(LocalDate.now());
+
+    newBookRequestRepository.save(newBookRequest);
+
+    return true;
+  }
+
+
+
   private Stream<CatalogueEntry> getCatalogueFilteredBy(@RequestParam String searchString) {
     return getCatalogue()
         .stream()
@@ -238,9 +275,9 @@ class Controller {
   private boolean matchesBookInfo(final String searchString, final Volumes v) {
     return v.getItems().stream()
         .map(Items::getVolumeInfo)
-        .anyMatch(volumeInfo -> (volumeInfo.getTitle() != null && volumeInfo.getTitle().toLowerCase().contains(searchString))
-            || (volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString))
-            || (volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString)))
+        .anyMatch(volumeInfo -> volumeInfo.getTitle() != null && volumeInfo.getTitle().toLowerCase().contains(searchString)
+            || volumeInfo.getSubtitle() != null && volumeInfo.getSubtitle().toLowerCase().contains(searchString)
+            || volumeInfo.getAuthors() != null & volumeInfo.getAuthors().stream().anyMatch(auth -> auth.toLowerCase().contains(searchString))
         );
   }
 
